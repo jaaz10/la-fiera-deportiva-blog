@@ -1,33 +1,37 @@
-name: Deploy to GitHub Pages
-
+name: Build and Deploy
 on:
-  # Trigger the workflow every time you push to the `main` branch
   push:
     branches: [main]
-  # Allow triggering the workflow manually
-  workflow_dispatch:
+  pull_request:
+    branches: [main]
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: "18.x" # Use Node.js 18 (meets Astro's requirement)
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
+      - name: Build site
         run: npm run build
 
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: dist # or whatever your build output folder is
-          branch: gh-pages
-          clean: true
+      - name: Copy to docs folder
+        run: |
+          rm -rf docs/
+          cp -r dist/ docs/
+          echo "lafieradeportiva.com" > docs/CNAME
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add docs/
+          git commit -m "Update build files" || echo "No changes to commit"
+          git push
