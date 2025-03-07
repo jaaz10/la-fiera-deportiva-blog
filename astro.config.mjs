@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://jaaz10.github.io',
+	site: 'https://lafieradeportiva.com',
 	base: '',
 	integrations: [mdx(), sitemap()],
 });
