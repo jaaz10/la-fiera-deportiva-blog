@@ -7,5 +7,6 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
 	site: 'https://lafieradeportiva.com',
 	outDir: './docs',
+	base: '/',
 	integrations: [mdx(), sitemap()],
 });
