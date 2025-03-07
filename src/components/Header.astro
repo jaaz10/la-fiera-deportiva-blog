@@ -1,85 +1,392 @@
 ---
-import HeaderLink from './HeaderLink.astro';
-import { SITE_TITLE } from '../consts';
+import HeaderLink from "./HeaderLink.astro";
+import { SITE_TITLE } from "../consts";
 ---
 
 <header>
-	<nav>
-		<h2><a href="/">{SITE_TITLE}</a></h2>
-		<div class="internal-links">
-			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/blog">Blog</HeaderLink>
-			<HeaderLink href="/about">About</HeaderLink>
-		</div>
-		<div class="social-links">
-			<a href="https://m.webtoo.ls/@astro" target="_blank">
-				<span class="sr-only">Follow Astro on Mastodon</span>
-				<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32"
-					><path
-						fill="currentColor"
-						d="M11.19 12.195c2.016-.24 3.77-1.475 3.99-2.603.348-1.778.32-4.339.32-4.339 0-3.47-2.286-4.488-2.286-4.488C12.062.238 10.083.017 8.027 0h-.05C5.92.017 3.942.238 2.79.765c0 0-2.285 1.017-2.285 4.488l-.002.662c-.004.64-.007 1.35.011 2.091.083 3.394.626 6.74 3.78 7.57 1.454.383 2.703.463 3.709.408 1.823-.1 2.847-.647 2.847-.647l-.06-1.317s-1.303.41-2.767.36c-1.45-.05-2.98-.156-3.215-1.928a3.614 3.614 0 0 1-.033-.496s1.424.346 3.228.428c1.103.05 2.137-.064 3.188-.189zm1.613-2.47H11.13v-4.08c0-.859-.364-1.295-1.091-1.295-.804 0-1.207.517-1.207 1.541v2.233H7.168V5.89c0-1.024-.403-1.541-1.207-1.541-.727 0-1.091.436-1.091 1.296v4.079H3.197V5.522c0-.859.22-1.541.66-2.046.456-.505 1.052-.764 1.793-.764.856 0 1.504.328 1.933.983L8 4.39l.417-.695c.429-.655 1.077-.983 1.934-.983.74 0 1.336.259 1.791.764.442.505.661 1.187.661 2.046v4.203z"
-					></path></svg
-				>
-			</a>
-			<a href="https://twitter.com/astrodotbuild" target="_blank">
-				<span class="sr-only">Follow Astro on Twitter</span>
-				<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32"
-					><path
-						fill="currentColor"
-						d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"
-					></path></svg
-				>
-			</a>
-			<a href="https://github.com/withastro/astro" target="_blank">
-				<span class="sr-only">Go to Astro's GitHub repo</span>
-				<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32"
-					><path
-						fill="currentColor"
-						d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
-					></path></svg
-				>
-			</a>
-		</div>
-	</nav>
-</header>
-<style>
-	header {
-		margin: 0;
-		padding: 0 1em;
-		background: white;
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
-	}
-	h2 {
-		margin: 0;
-		font-size: 1em;
-	}
+  <div class="logo-container">
+    <a href="/">
+      <img src="/logo.png" alt={SITE_TITLE} class="site-logo" />
+    </a>
+  </div>
 
-	h2 a,
-	h2 a.active {
-		text-decoration: none;
-	}
-	nav {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-	nav a {
-		padding: 1em 0.5em;
-		color: var(--black);
-		border-bottom: 4px solid transparent;
-		text-decoration: none;
-	}
-	nav a.active {
-		text-decoration: none;
-		border-bottom-color: var(--accent);
-	}
-	.social-links,
-	.social-links a {
-		display: flex;
-	}
-	@media (max-width: 720px) {
-		.social-links {
-			display: none;
-		}
-	}
+  <nav class="main-nav">
+    <ul>
+      <li><HeaderLink href="/">Home</HeaderLink></li>
+      <li><HeaderLink href="/about">About</HeaderLink></li>
+
+      <!-- Teams Dropdown -->
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle"
+          >Teams <span class="dropdown-arrow">▼</span></a
+        >
+        <ul class="dropdown-menu">
+          <li><a href="/chicago-fire">Chicago Fire FC</a></li>
+          <li><a href="/chicago-stars">Chicago Stars</a></li>
+        </ul>
+      </li>
+
+      <!-- Content Dropdown -->
+      <li class="dropdown">
+        <a href="#" class="dropdown-toggle"
+          >Content <span class="dropdown-arrow">▼</span></a
+        >
+        <ul class="dropdown-menu">
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/videos">Videos</a></li>
+          <li><a href="/podcasts">Podcasts</a></li>
+        </ul>
+      </li>
+
+      <!-- Tickets Button -->
+      <li class="tickets-button fire-tickets">
+        <a href="https://www.chicagofirefc.com/tickets/" target="_blank"
+          >Buy Fire Tickets</a
+        >
+      </li>
+      <li class="tickets-button stars-tickets">
+        <a href="https://www.chicagoredstars.com/tickets/" target="_blank"
+          >Buy Red Stars Tickets</a
+        >
+      </li>
+    </ul>
+  </nav>
+
+  <div class="social-links">
+    <a href="https://x.com/hernanespn" target="_blank">
+      <span class="sr-only">Follow on X (Twitter)</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        width="32"
+        height="32"
+        aria-hidden="true"
+        class="social-icon"
+      >
+        <path
+          d="M13.6823 10.6218L20.2391 3H18.6854L12.9921 9.61788L8.44486 3H3.2002L10.0765 13.0074L3.2002 21H4.75404L10.7663 14.0113L15.5549 21H20.7996L13.6819 10.6218H13.6823ZM11.5541 13.0956L10.8574 12.0991L5.31391 4.16971H7.70053L12.1742 10.5689L12.8709 11.5655L18.6861 19.8835H16.2995L11.5541 13.096V13.0956Z"
+        ></path>
+      </svg>
+    </a>
+    <a href="https://www.instagram.com/lafieradeportiva/?hl=en" target="_blank">
+      <span class="sr-only">Follow on Instagram</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        width="32"
+        height="32"
+        aria-hidden="true"
+        class="social-icon"
+      >
+        <path
+          d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"
+        ></path>
+      </svg>
+    </a>
+    <a href="https://www.youtube.com/user/hernancitohesjr" target="_blank">
+      <span class="sr-only">Follow on YouTube</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        width="32"
+        height="32"
+        aria-hidden="true"
+        class="social-icon"
+      >
+        <path
+          d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"
+        ></path>
+      </svg>
+    </a>
+  </div>
+
+  <!-- Mobile Menu Button -->
+  <button class="mobile-menu-toggle" aria-label="Toggle Menu">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<style>
+  header {
+    display: flex;
+    align-items: center;
+    padding: 0 1em;
+    background: var(--header-bg, #111);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+  }
+
+  .logo-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .site-logo {
+    height: 70px;
+    width: auto;
+  }
+
+  .main-nav {
+    margin-left: 2rem;
+    flex-grow: 1;
+  }
+
+  .main-nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .main-nav li {
+    position: relative;
+  }
+
+  .main-nav a {
+    color: var(--text-color, white);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+    padding: 1em 0.5em;
+    display: block;
+  }
+
+  .main-nav a:hover,
+  .main-nav a.active {
+    color: var(--accent, #e73631);
+  }
+
+  /* Dropdown styles */
+  .dropdown {
+    position: relative;
+  }
+
+  .dropdown-arrow {
+    font-size: 10px;
+    margin-left: 4px;
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--header-bg, #111);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    padding: 0.5rem 0;
+    min-width: 150px;
+    z-index: 100;
+    display: none !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .dropdown:hover .dropdown-menu {
+    display: block !important;
+  }
+
+  .dropdown-menu li {
+    display: block;
+    margin: 0;
+  }
+
+  .dropdown-menu a {
+    display: block;
+    padding: 0.5rem 1rem;
+    white-space: nowrap;
+  }
+
+  /* Tickets Button Styles */
+  .tickets-button {
+    margin-left: 0.5rem;
+  }
+
+  .fire-tickets a {
+    background-color: var(--accent, #e73631);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+
+  .stars-tickets a {
+    background-color: #1a3a7e; /* Red Stars blue color */
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+
+  .fire-tickets a:hover {
+    background-color: #c72f2a;
+  }
+
+  .stars-tickets a:hover {
+    background-color: #122a5c;
+  }
+
+  /* Make sure buttons align properly on smaller screens */
+  @media (max-width: 1024px) {
+    .tickets-button {
+      margin-left: 0;
+      margin-top: 0.5rem;
+    }
+  }
+
+  /* Social Links */
+  .social-links {
+    display: flex;
+    gap: 1rem;
+    margin-left: auto;
+  }
+
+  .social-icon {
+    fill: var(--text-color, white);
+    transition: fill 0.3s;
+  }
+
+  .social-icon:hover {
+    fill: var(--accent, #e73631);
+  }
+
+  /* Mobile Menu */
+  .mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+
+  .mobile-menu-toggle span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background-color: var(--text-color, white);
+    margin: 5px 0;
+    transition: 0.3s;
+  }
+
+  @media (max-width: 1024px) {
+    .main-nav,
+    .social-links {
+      display: none;
+    }
+
+    .mobile-menu-toggle {
+      display: block;
+      margin-left: auto;
+    }
+
+    /* Add mobile menu open styles */
+    header.menu-open .main-nav,
+    header.menu-open .social-links {
+      display: block;
+      position: absolute;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      background-color: var(--header-bg, #111);
+      padding: 1rem;
+      z-index: 50;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    header.menu-open .main-nav ul {
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+
+    header.menu-open .dropdown-menu {
+      position: static;
+      margin-top: 0.5rem;
+      margin-left: 1rem;
+      border: none;
+      box-shadow: none;
+      width: 100%;
+    }
+
+    header.menu-open .social-links {
+      top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      justify-content: center;
+    }
+
+    .site-logo {
+      height: 50px; /* Smaller on mobile */
+    }
+  }
+
+  @media (max-width: 720px) {
+    .site-logo {
+      height: 35px; /* Even smaller on very small screens */
+    }
+  }
 </style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Mobile menu toggle
+    const menuToggle = document.querySelector(".mobile-menu-toggle");
+    const header = document.querySelector("header");
+
+    if (menuToggle && header) {
+      menuToggle.addEventListener("click", () => {
+        header.classList.toggle("menu-open");
+      });
+    }
+
+    // Dropdown handling for mobile
+    const dropdownToggles = document.querySelectorAll(".dropdown-toggle");
+
+    dropdownToggles.forEach((toggle) => {
+      toggle.addEventListener("click", (e) => {
+        // Only handle dropdown clicks on mobile
+        if (window.innerWidth <= 1024) {
+          e.preventDefault();
+
+          // Get the parent dropdown container
+          const parent = toggle.closest(".dropdown");
+
+          if (!parent) {
+            console.error("No parent dropdown found");
+            return;
+          }
+
+          // Close any other open dropdowns first
+          document
+            .querySelectorAll(".dropdown.open")
+            .forEach((openDropdown) => {
+              if (openDropdown !== parent) {
+                openDropdown.classList.remove("open");
+                const openMenu = openDropdown.querySelector(".dropdown-menu");
+                if (openMenu && openMenu instanceof HTMLElement) {
+                  openMenu.style.display = "none";
+                }
+              }
+            });
+
+          // Toggle this dropdown
+          const isOpen = parent.classList.contains("open");
+          parent.classList.toggle("open");
+
+          // Find and toggle the menu visibility
+          const menu = parent.querySelector(".dropdown-menu");
+
+          if (menu && menu instanceof HTMLElement) {
+            // If we're opening and it was closed, or closing and it was open
+            menu.style.display = !isOpen ? "block" : "none";
+          } else {
+            console.error("Dropdown menu not found", parent);
+          }
+        }
+      });
+    });
+  });
+</script>

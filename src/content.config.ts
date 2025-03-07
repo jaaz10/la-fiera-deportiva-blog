@@ -1,18 +1,44 @@
-import { glob } from 'astro/loaders';
 import { defineCollection, z } from 'astro:content';
 
+// Keep existing blog collection
 const blog = defineCollection({
-	// Load Markdown and MDX files in the `src/content/blog/` directory.
-	loader: glob({ base: './src/content/blog', pattern: '**/*.{md,mdx}' }),
-	// Type-check frontmatter using a schema
-	schema: z.object({
-		title: z.string(),
-		description: z.string(),
-		// Transform string to Date object
-		pubDate: z.coerce.date(),
-		updatedDate: z.coerce.date().optional(),
-		heroImage: z.string().optional(),
-	}),
+  // This likely exists already
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.coerce.date(),
+    updatedDate: z.coerce.date().optional(),
+    heroImage: z.string().optional(),
+    // other existing properties...
+  }),
 });
 
-export const collections = { blog };
+// Add video collection
+const videos = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.coerce.date(),
+    updatedDate: z.coerce.date().optional(),
+    heroImage: z.string().optional(),
+    videoId: z.string(), // YouTube video ID
+  }),
+});
+
+// Add podcast collection
+const podcasts = defineCollection({
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.coerce.date(),
+    updatedDate: z.coerce.date().optional(),
+    heroImage: z.string().optional(),
+    spotifyId: z.string(), // Spotify podcast ID
+  }),
+});
+
+export const collections = {
+  'blog': blog,
+  'videos': videos,
+  'podcasts': podcasts,
+};

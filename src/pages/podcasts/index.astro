@@ -1,0 +1,86 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BlogPost.astro"; // adjust path if needed
+
+// Get all video entries
+const videos = await getCollection("videos");
+// Sort by date
+const sortedVideos = videos.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout
+  title="Sports Videos | La Fiera Deportiva"
+  description="Watch the latest football videos from La Fiera Deportiva"
+  pubDate={new Date()}
+>
+  <main>
+    <section>
+      <h1>Latest Football Videos</h1>
+      <div class="video-grid">
+        {
+          sortedVideos.map((video) => (
+            <div class="video-card">
+              <a href={`/videos/${video.slug}/`}>
+                <img
+                  src={
+                    video.data.heroImage ||
+                    `https://img.youtube.com/vi/${video.data.videoId}/maxresdefault.jpg`
+                  }
+                  alt={video.data.title}
+                />
+                <h2>{video.data.title}</h2>
+              </a>
+              <p>{video.data.description}</p>
+              <p class="date">
+                {video.data.pubDate.toLocaleDateString("en-us", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  .video-card {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: var(--card-bg);
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  }
+
+  .video-card img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .video-card h2 {
+    margin: 0.5rem;
+    font-size: 1.25rem;
+  }
+
+  .video-card p {
+    margin: 0.5rem;
+  }
+
+  .date {
+    font-size: 0.8rem;
+    opacity: 0.8;
+  }
+</style>
