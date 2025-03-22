@@ -4,7 +4,7 @@
   License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
  */
 
-:root {
+ :root {
 	--accent: #2337ff;
 	--accent-dark: #000d8a;
 	--black: 15, 18, 25;
@@ -99,6 +99,8 @@ input {
 }
 table {
 	width: 100%;
+	overflow-x: auto;
+	display: block;
 }
 img {
 	max-width: 100%;
@@ -109,10 +111,12 @@ code {
 	padding: 2px 5px;
 	background-color: rgb(var(--gray-light));
 	border-radius: 2px;
+	font-size: 0.9em;
 }
 pre {
 	padding: 1.5em;
 	border-radius: 8px;
+	overflow-x: auto;
 }
 pre > code {
 	all: unset;
@@ -127,12 +131,64 @@ hr {
 	border: none;
 	border-top: 1px solid rgb(var(--gray-light));
 }
+
+/* Enhanced mobile responsiveness */
 @media (max-width: 720px) {
 	body {
-		font-size: 18px;
+		font-size: 16px;
 	}
 	main {
 		padding: 1em;
+	}
+	h1 {
+		font-size: 2.5em;
+	}
+	h2 {
+		font-size: 2em;
+	}
+	h3 {
+		font-size: 1.6em;
+	}
+	h4 {
+		font-size: 1.4em;
+	}
+	h5 {
+		font-size: 1.15em;
+	}
+	blockquote {
+		padding: 0 0 0 15px;
+		font-size: 1.2em;
+	}
+	pre {
+		padding: 1em;
+	}
+	table {
+		font-size: 0.9em;
+	}
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+	body {
+		font-size: 15px;
+	}
+	h1 {
+		font-size: 2em;
+	}
+	h2 {
+		font-size: 1.7em;
+	}
+	h3 {
+		font-size: 1.4em;
+	}
+	h4 {
+		font-size: 1.2em;
+	}
+	blockquote {
+		font-size: 1.1em;
+	}
+	pre {
+		padding: 0.8em;
 	}
 }
 
