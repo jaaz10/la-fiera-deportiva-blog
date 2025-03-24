@@ -1,46 +1,108 @@
 ---
-const today = new Date();
+// src/components/Footer.astro
 ---
 
-<footer>
-  <div class="social-links">
-    <a href="https://x.com/hernanespn" aria-label="X">
-      <i class="fab fa-x-twitter" aria-hidden="true"></i> X
-    </a>
-    <a
-      href="https://www.instagram.com/lafieradeportiva/?hl=en"
-      aria-label="Instagram"
-    >
-      <i class="fab fa-fw fa-instagram" aria-hidden="true"></i> INSTAGRAM
-    </a>
-    <a href="https://www.youtube.com/user/hernancitohesjr" aria-label="YouTube">
-      <i class="fab fa-fw fa-youtube" aria-hidden="true"></i> YOUTUBE
-    </a>
-  </div>
-  <div class="copyright">
-    &copy; {today.getFullYear()} La Fiera Deportiva. Created by Midway Web Design.
+<footer class="site-footer">
+  <div class="footer-border top"></div>
+  <div class="container">
+    <div class="footer-content">
+      <div class="social-links">
+        <a
+          href="https://github.com/yourusername"
+          target="_blank"
+          aria-label="GitHub"
+        >
+          <i class="fa-brands fa-github"></i>
+        </a>
+        <a
+          href="https://www.youtube.com/@LAFIERADEPORTIVA"
+          target="_blank"
+          aria-label="YouTube"
+        >
+          <i class="fa-brands fa-youtube"></i>
+        </a>
+        <a
+          href="https://instagram.com/yourusername"
+          target="_blank"
+          aria-label="Instagram"
+        >
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+      </div>
+      <div class="footer-text">Created by Midway Web Design</div>
+    </div>
   </div>
 </footer>
 
 <style>
-  /* Keep the existing styles and add yours as needed */
+  .site-footer {
+    height: 60px;
+    background-color: #141946; /* Dark background to match image */
+    position: relative;
+  }
+
+  .footer-border {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1px;
+  }
+
+  .footer-border.top {
+    top: 0;
+    height: 4px;
+    background-color: #e11d48; /* Red border to match your header */
+  }
+
+  .container {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+  }
+
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 20px;
+  }
 
   .social-links {
-    padding-top: 2rem;
     display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin-bottom: 1rem;
+    gap: 1.5rem;
   }
 
   .social-links a {
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.25rem;
+    transition: color 0.2s;
   }
 
-  .copyright {
-    display: flex;
-    justify-content: center;
+  .social-links a:hover {
+    color: white;
+  }
+
+  .footer-text {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.875rem;
+    letter-spacing: 1px;
+    font-weight: 500;
+    text-transform: uppercase;
+    /* Added margin to balance */
+  }
+
+  @media (max-width: 768px) {
+    .social-links {
+      gap: 1.25rem;
+    }
+
+    .social-links a {
+      font-size: 1.125rem;
+    }
+
+    .footer-text {
+      font-size: 0.75rem;
+    }
   }
 </style>

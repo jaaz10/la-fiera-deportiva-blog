@@ -1,776 +1,1015 @@
 ---
-import BaseHead from "../components/BaseHead.astro";
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
+import Layout from "../layouts/Layout.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
-import { getCollection } from "astro:content";
-
-// Get content collections
-const videos = await getCollection("videos").catch(() => []);
-const latestVideos = videos
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 4); // Showing more videos since this is the main content
-
-const podcasts = await getCollection("podcasts").catch(() => []);
-const latestPodcasts = podcasts
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 2); // Show the two latest podcasts
 ---
 
-<!doctype html>
-<html lang="en" class="dark-theme">
-  <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  </head>
-  <body>
-    <Header />
-    <main>
-      <!-- Hero Section - Simplified -->
-      <section class="hero">
-        <div class="hero-content">
-          <h1>La Fiera Deportiva</h1>
-          <p>
-            Bringing Chicago soccer to life in two languages | Trusted voice for
-            over a decade
+<Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <!-- Hero Profile Section -->
+  <section class="hero-profile">
+    <div class="container">
+      <div class="profile-wrapper">
+        <div class="profile-image">
+          <img src="/logo-no-bg.png" alt="Hernan" />
+        </div>
+        <div class="profile-content">
+          <h1>
+            <span class="hand-emoji">👋</span> My name is <span class="name"
+              >Hernan</span
+            >.
+          </h1>
+          <p class="welcome-text">
+            Welcome to <a href="/">La Fiera Deportiva</a>!
+          </p>
+          <p class="bio">
+            I'm a sports commentator and soccer enthusiast sharing my passion
+            for the game with fans worldwide. I cover everything from local
+            matches to international tournaments with passion and insight.
           </p>
         </div>
-      </section>
+      </div>
+    </div>
+  </section>
 
-      <!-- Featured Videos Section -->
-      <section class="content-section">
-        <div class="section-header">
-          <h2>Latest Videos</h2>
-          <a href="/videos" class="view-all">View All</a>
-        </div>
-
-        <div class="video-grid">
-          <!-- Hardcoded placeholder videos that will always show -->
-          <div class="video-card">
-            <a href="#">
-              <div class="video-thumbnail">
-                <img
-                  src="https://img.youtube.com/vi/TzdqccgC2iE/maxresdefault.jpg"
-                  alt="Real Madrid vs Barcelona: El Clásico Tactical Analysis"
-                />
-                <div class="play-button">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    width="48"
-                    height="48"
-                  >
-                    <path d="M8 5v14l11-7z"></path>
-                  </svg>
-                </div>
+  <!-- Recent Videos Section -->
+  <section class="videos-section">
+    <div class="container">
+      <h2 class="section-title">Recent Videos</h2>
+      <div class="grid grid-3">
+        <!-- Video Card 1 -->
+        <div class="content-card">
+          <a href="https://www.youtube.com/watch?v=TzdqccgC2iE" target="_blank">
+            <div class="card-thumbnail">
+              <img
+                src="https://img.youtube.com/vi/TzdqccgC2iE/maxresdefault.jpg"
+                alt="Video Title"
+              />
+              <div class="icon-play">
+                <i class="fas fa-play-circle"></i>
               </div>
+            </div>
+            <div class="card-body">
               <h3>Real Madrid vs Barcelona: El Clásico Tactical Analysis</h3>
-            </a>
-          </div>
-
-          <div class="video-card">
-            <a href="#">
-              <div class="video-thumbnail">
-                <img
-                  src="https://img.youtube.com/vi/p3ZNX26Pkgk/maxresdefault.jpg"
-                  alt="Messi's Impact at Inter Miami: Six Months Later"
-                />
-                <div class="play-button">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    width="48"
-                    height="48"
-                  >
-                    <path d="M8 5v14l11-7z"></path>
-                  </svg>
-                </div>
+              <div class="card-meta">
+                <span class="project-link"
+                  ><i class="fa-solid fa-video"></i> Video</span
+                >
               </div>
-              <h3>Messi's Impact at Inter Miami: Six Months Later</h3>
-            </a>
-          </div>
+            </div>
+          </a>
+        </div>
 
-          <div class="video-card">
-            <a href="#">
-              <div class="video-thumbnail">
-                <img
-                  src="https://img.youtube.com/vi/emZx5kgvG3Y/maxresdefault.jpg"
-                  alt="Champions League Quarterfinals Preview"
-                />
-                <div class="play-button">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    width="48"
-                    height="48"
-                  >
-                    <path d="M8 5v14l11-7z"></path>
-                  </svg>
-                </div>
+        <!-- Video Card 2 -->
+        <div class="content-card">
+          <a href="https://www.youtube.com/watch?v=p3ZNX26Pkgk" target="_blank">
+            <div class="card-thumbnail">
+              <img
+                src="https://img.youtube.com/vi/p3ZNX26Pkgk/maxresdefault.jpg"
+                alt="Video Title"
+              />
+              <div class="icon-play">
+                <i class="fas fa-play-circle"></i>
               </div>
+            </div>
+            <div class="card-body">
+              <h3>Messi's Impact at Inter Miami: Analysis</h3>
+              <div class="card-meta">
+                <span class="project-link"
+                  ><i class="fa-solid fa-video"></i> Video</span
+                >
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Video Card 3 -->
+        <div class="content-card">
+          <a href="https://www.youtube.com/watch?v=emZx5kgvG3Y" target="_blank">
+            <div class="card-thumbnail">
+              <img
+                src="https://img.youtube.com/vi/emZx5kgvG3Y/maxresdefault.jpg"
+                alt="Video Title"
+              />
+              <div class="icon-play">
+                <i class="fas fa-play-circle"></i>
+              </div>
+            </div>
+            <div class="card-body">
               <h3>Champions League Quarterfinals Preview</h3>
-            </a>
-          </div>
-
-          <div class="video-card">
-            <a href="#">
-              <div class="video-thumbnail">
-                <img
-                  src="https://img.youtube.com/vi/JOyIwYnkSAw/maxresdefault.jpg"
-                  alt="Premier League Title Race: The Final Stretch"
-                />
-                <div class="play-button">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    width="48"
-                    height="48"
-                  >
-                    <path d="M8 5v14l11-7z"></path>
-                  </svg>
-                </div>
+              <div class="card-meta">
+                <span class="project-link"
+                  ><i class="fa-solid fa-video"></i> Video</span
+                >
               </div>
-              <h3>Premier League Title Race: The Final Stretch</h3>
-            </a>
-          </div>
+            </div>
+          </a>
         </div>
-      </section>
+      </div>
+      <div class="view-more">
+        <a href="https://www.youtube.com/@LAFIERADEPORTIVA" target="_blank"
+          >View Channel <i class="fa-solid fa-arrow-right"></i></a
+        >
+      </div>
+    </div>
+  </section>
 
-      <!-- Podcast Section -->
-      <section class="content-section">
-        <div class="section-header">
-          <h2>Latest Podcasts</h2>
-          <a href="/podcasts" class="view-all">View All</a>
+  <!-- Featured Course Banner -->
+  <section class="podcast-banner">
+    <div class="banner-border top"></div>
+    <div class="container">
+      <div class="banner-wrapper">
+        <div class="banner-logo">
+          <img src="/logo.png" alt="La Fiera Deportiva Logo" />
         </div>
-        <div class="podcast-grid">
-          <div class="podcast-card">
-            <h3>
-              La Fiera Deportiva Podcast #143: South American Football Special
-            </h3>
-            <p>
-              This week we dive deep into the latest developments in South
-              American football, from the Copa Libertadores to emerging talents
-              heading to Europe.
-            </p>
-            <iframe
-              style="border-radius:12px"
-              src="https://open.spotify.com/embed/episode/0biJEUrYbPl5epJohG9D4E?theme=1"
-              width="100%"
-              height="152"
-              frameborder="0"
-              allowfullscreen
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            >
-            </iframe>
-          </div>
-
-          <div class="podcast-card">
-            <h3>La Fiera Deportiva Podcast #142: Coaching Carousel</h3>
-            <p>
-              Exploring the high-profile managerial changes sweeping across
-              Europe's top leagues and what it means for next season.
-            </p>
-            <iframe
-              style="border-radius:12px"
-              src="https://open.spotify.com/embed/episode/4cOdK2wGLETKBW3PiRPJc0?theme=1"
-              width="100%"
-              height="152"
-              frameborder="0"
-              allowfullscreen
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            >
-            </iframe>
-          </div>
+        <div class="banner-content">
+          <div class="banner-badge">Trusted by 1000+ fans</div>
+          <h2>La Fiera Deportiva Podcast</h2>
+          <p>
+            A premium soccer podcast exploring match analysis, player
+            interviews, and the latest developments in the beautiful game.
+          </p>
+          <a href="#" class="btn btn-secondary">Listen More</a>
         </div>
-      </section>
+      </div>
+    </div>
+    <div class="banner-border bottom"></div>
+  </section>
 
-      <style>
-        /* Podcast Section Styles */
-        .podcast-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-          gap: 1.5rem;
-        }
-
-        .podcast-card {
-          background: var(--card-bg, #1e1e1e);
-          border-radius: 8px;
-          padding: 1.5rem;
-          box-shadow: var(--card-shadow, 0 4px 6px rgba(0, 0, 0, 0.3));
-          transition: transform 0.3s ease;
-        }
-
-        .podcast-card:hover {
-          transform: translateY(-6px);
-        }
-
-        .podcast-card h3 {
-          margin-top: 0;
-          margin-bottom: 0.5rem;
-          color: var(--text-color, #ffffff);
-        }
-
-        .podcast-card p {
-          margin-bottom: 1rem;
-          color: var(--text-secondary, #b3b3b3);
-        }
-
-        @media (max-width: 768px) {
-          .podcast-grid {
-            grid-template-columns: 1fr;
-          }
-        }
-      </style>
-
-      <!-- Twitter Feed Section -->
-      <section class="content-section">
-        <div class="section-header">
-          <h2>Latest Tweets</h2>
-          <a href="https://x.com/hernanespn" target="_blank" class="view-all"
-            >Follow on X</a
+  <!-- Recent Tweets -->
+  <section class="videos-section">
+    <div class="container">
+      <h2 class="section-title">Recent Tweets</h2>
+      <div class="grid grid-3">
+        <!-- Tweet Card 1 -->
+        <div class="content-card">
+          <a
+            href="https://twitter.com/lafieradeportiva/status/1"
+            target="_blank"
           >
+            <div class="card-thumbnail tweet-thumbnail">
+              <!-- Twitter gradient background -->
+              <div class="tweet-bg"></div>
+              <div class="icon-play twitter-icon">
+                <i class="fab fa-twitter"></i>
+              </div>
+            </div>
+            <div class="card-body">
+              <h3>
+                Breaking down Kylian Mbappé's performance last night for Real
+                Madrid
+              </h3>
+              <p class="tweet-text">
+                His movement off the ball created so much space for Vinícius Jr. <span
+                  class="hashtag">#RealMadrid</span
+                >
+                <span class="hashtag">#ChampionsLeague</span>
+              </p>
+              <div class="card-meta">
+                <span class="project-link">
+                  <i class="far fa-heart"></i> 145
+                </span>
+                <span class="project-link">
+                  <i class="fas fa-retweet"></i> 42
+                </span>
+                <span class="project-link">
+                  <i class="far fa-comment"></i> 12
+                </span>
+              </div>
+            </div>
+          </a>
         </div>
-        <div class="twitter-wall">
-          <!-- Tweet 1 -->
-          <div class="tweet-card">
-            <div class="tweet-header">
-              <div class="tweet-author">
-                <img
-                  src="/public/profile-placeholder.jpg"
-                  alt="Profile"
-                  class="profile-img"
-                />
-                <div>
-                  <span class="author-name">La Fiera Deportiva</span>
-                  <span class="author-handle">@hernanespn</span>
-                </div>
-              </div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                width="20"
-                height="20"
-                class="twitter-logo"
-              >
-                <path
-                  d="M13.6823 10.6218L20.2391 3H18.6854L12.9921 9.61788L8.44486 3H3.2002L10.0765 13.0074L3.2002 21H4.75404L10.7663 14.0113L15.5549 21H20.7996L13.6819 10.6218H13.6823ZM11.5541 13.0956L10.8574 12.0991L5.31391 4.16971H7.70053L12.1742 10.5689L12.8709 11.5655L18.6861 19.8835H16.2995L11.5541 13.096V13.0956Z"
-                ></path>
-              </svg>
-            </div>
-            <div class="tweet-content">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam
-              corporis molestiae recusandae, perferendis dolor aliquid?
-            </div>
-            <div class="tweet-image">
-              <img
-                src="/public/tweet-image-2.jpg"
-                alt="Lamine Yamal in action"
-              />
-            </div>
-            <div class="tweet-footer">
-              <span class="tweet-date">Mar 7, 2025</span>
-              <div class="tweet-stats">
-                <span
-                  ><svg viewBox="0 0 24 24" width="16" height="16"
-                    ><path
-                      fill="currentColor"
-                      d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"
-                    ></path></svg
-                  > 48</span
-                >
-                <span
-                  ><svg viewBox="0 0 24 24" width="16" height="16"
-                    ><path
-                      fill="currentColor"
-                      d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.896 2 2 2H13v2H7.5c-2.209 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 6H11V4h5.5c2.209 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46-4.432 4.14-4.432-4.14 1.364-1.46 2.068 1.93V8c0-1.1-.896-2-2-2z"
-                    ></path></svg
-                  > 156</span
-                >
-                <span
-                  ><svg viewBox="0 0 24 24" width="16" height="16"
-                    ><path
-                      fill="currentColor"
-                      d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.552 1.12-.633 2.78.479 4.82 1.074 1.97 3.257 4.27 7.129 6.61 3.87-2.34 6.052-4.64 7.126-6.61 1.111-2.04 1.03-3.7.477-4.82-.561-1.13-1.666-1.84-2.908-1.91zm4.187 7.69c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"
-                    ></path></svg
-                  > 223</span
-                >
-              </div>
-            </div>
-          </div>
 
-          <!-- Tweet 2 -->
-          <div class="tweet-card">
-            <div class="tweet-header">
-              <div class="tweet-author">
-                <img
-                  src="/public/profile-placeholder.jpg"
-                  alt="Profile"
-                  class="profile-img"
-                />
-                <div>
-                  <span class="author-name">La Fiera Deportiva</span>
-                  <span class="author-handle">@hernanespn</span>
-                </div>
-              </div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                width="20"
-                height="20"
-                class="twitter-logo"
-              >
-                <path
-                  d="M13.6823 10.6218L20.2391 3H18.6854L12.9921 9.61788L8.44486 3H3.2002L10.0765 13.0074L3.2002 21H4.75404L10.7663 14.0113L15.5549 21H20.7996L13.6819 10.6218H13.6823ZM11.5541 13.0956L10.8574 12.0991L5.31391 4.16971H7.70053L12.1742 10.5689L12.8709 11.5655L18.6861 19.8835H16.2995L11.5541 13.096V13.0956Z"
-                ></path>
-              </svg>
-            </div>
-            <div class="tweet-content">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam
-              corporis molestiae recusandae, perferendis dolor aliquid?
-            </div>
-            <div class="tweet-image">
-              <img
-                src="/public/tweet-image-2.jpg"
-                alt="Argentina national team"
-              />
-            </div>
-            <div class="tweet-footer">
-              <span class="tweet-date">Mar 5, 2025</span>
-              <div class="tweet-stats">
-                <span
-                  ><svg viewBox="0 0 24 24" width="16" height="16"
-                    ><path
-                      fill="currentColor"
-                      d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"
-                    ></path></svg
-                  > 72</span
-                >
-                <span
-                  ><svg viewBox="0 0 24 24" width="16" height="16"
-                    ><path
-                      fill="currentColor"
-                      d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.896 2 2 2H13v2H7.5c-2.209 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 6H11V4h5.5c2.209 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46-4.432 4.14-4.432-4.14 1.364-1.46 2.068 1.93V8c0-1.1-.896-2-2-2z"
-                    ></path></svg
-                  > 214</span
-                >
-                <span
-                  ><svg viewBox="0 0 24 24" width="16" height="16"
-                    ><path
-                      fill="currentColor"
-                      d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.552 1.12-.633 2.78.479 4.82 1.074 1.97 3.257 4.27 7.129 6.61 3.87-2.34 6.052-4.64 7.126-6.61 1.111-2.04 1.03-3.7.477-4.82-.561-1.13-1.666-1.84-2.908-1.91zm4.187 7.69c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"
-                    ></path></svg
-                  > 352</span
-                >
+        <!-- Tweet Card 2 -->
+        <div class="content-card">
+          <a
+            href="https://twitter.com/lafieradeportiva/status/2"
+            target="_blank"
+          >
+            <div class="card-thumbnail tweet-thumbnail">
+              <div class="tweet-bg"></div>
+              <div class="icon-play twitter-icon">
+                <i class="fab fa-twitter"></i>
               </div>
             </div>
-          </div>
-
-          <!-- Tweet 3 -->
-          <div class="tweet-card">
-            <div class="tweet-header">
-              <div class="tweet-author">
-                <img
-                  src="/public/profile-placeholder.jpg"
-                  alt="Profile"
-                  class="profile-img"
-                />
-                <div>
-                  <span class="author-name">La Fiera Deportiva</span>
-                  <span class="author-handle">@hernanespn</span>
-                </div>
-              </div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                width="20"
-                height="20"
-                class="twitter-logo"
-              >
-                <path
-                  d="M13.6823 10.6218L20.2391 3H18.6854L12.9921 9.61788L8.44486 3H3.2002L10.0765 13.0074L3.2002 21H4.75404L10.7663 14.0113L15.5549 21H20.7996L13.6819 10.6218H13.6823ZM11.5541 13.0956L10.8574 12.0991L5.31391 4.16971H7.70053L12.1742 10.5689L12.8709 11.5655L18.6861 19.8835H16.2995L11.5541 13.096V13.0956Z"
-                ></path>
-              </svg>
-            </div>
-            <div class="tweet-content">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam
-              corporis molestiae recusandae, perferendis dolor aliquid?
-            </div>
-            <div class="tweet-image">
-              <img
-                src="/public/tweet-image-2.jpg"
-                alt="Argentina national team"
-              />
-            </div>
-            <div class="tweet-footer">
-              <span class="tweet-date">Mar 1, 2025</span>
-              <div class="tweet-stats">
-                <span
-                  ><svg viewBox="0 0 24 24" width="16" height="16"
-                    ><path
-                      fill="currentColor"
-                      d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"
-                    ></path></svg
-                  > 94</span
+            <div class="card-body">
+              <h3>
+                Just dropped a new video analyzing Barcelona's pressing issues
+              </h3>
+              <p class="tweet-text">
+                Check it out on our YouTube channel! <span class="hashtag"
+                  >#Barcelona</span
                 >
-                <span
-                  ><svg viewBox="0 0 24 24" width="16" height="16"
-                    ><path
-                      fill="currentColor"
-                      d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.896 2 2 2H13v2H7.5c-2.209 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 6H11V4h5.5c2.209 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46-4.432 4.14-4.432-4.14 1.364-1.46 2.068 1.93V8c0-1.1-.896-2-2-2z"
-                    ></path></svg
-                  > 176</span
-                >
-                <span
-                  ><svg viewBox="0 0 24 24" width="16" height="16"
-                    ><path
-                      fill="currentColor"
-                      d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.552 1.12-.633 2.78.479 4.82 1.074 1.97 3.257 4.27 7.129 6.61 3.87-2.34 6.052-4.64 7.126-6.61 1.111-2.04 1.03-3.7.477-4.82-.561-1.13-1.666-1.84-2.908-1.91zm4.187 7.69c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"
-                    ></path></svg
-                  > 289</span
-                >
+                <span class="hashtag">#LaLiga</span>
+                <span class="mention">@FCBarcelona</span>
+              </p>
+              <div class="card-meta">
+                <span class="project-link">
+                  <i class="far fa-heart"></i> 213
+                </span>
+                <span class="project-link">
+                  <i class="fas fa-retweet"></i> 78
+                </span>
+                <span class="project-link">
+                  <i class="far fa-comment"></i> 24
+                </span>
               </div>
             </div>
-          </div>
+          </a>
         </div>
-      </section>
-    </main>
-    <Footer />
-  </body>
-</html>
 
-<style is:global>
-  /* Dark theme with red accents - applied globally */
-  :root {
-    --black: 0, 0, 0;
-    --bg-color: #121212;
-    --card-bg: #1e1e1e;
-    --accent: #e50914; /* Netflix-style red */
-    --text-color: #ffffff;
-    --text-secondary: #b3b3b3;
-    --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    --hover-brightness: 1.1;
+        <!-- Tweet Card 3 -->
+        <div class="content-card">
+          <a
+            href="https://twitter.com/lafieradeportiva/status/3"
+            target="_blank"
+          >
+            <div class="card-thumbnail tweet-thumbnail">
+              <div class="tweet-bg"></div>
+              <div class="icon-play twitter-icon">
+                <i class="fab fa-twitter"></i>
+              </div>
+            </div>
+            <div class="card-body">
+              <h3>
+                The tactical battle between Guardiola and Arteta this weekend
+              </h3>
+              <p class="tweet-text">
+                Who do you think has the edge? <span class="hashtag"
+                  >#ManCity</span
+                >
+                <span class="hashtag">#Arsenal</span>
+                <span class="hashtag">#PremierLeague</span>
+              </p>
+              <div class="card-meta">
+                <span class="project-link">
+                  <i class="far fa-heart"></i> 187
+                </span>
+                <span class="project-link">
+                  <i class="fas fa-retweet"></i> 56
+                </span>
+                <span class="project-link">
+                  <i class="far fa-comment"></i> 34
+                </span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="view-more">
+        <a href="/tweets" class="view-more-link"
+          >See All Tweets <i class="fa-solid fa-arrow-right"></i></a
+        >
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="newsletter-section">
+    <div class="container">
+      <div class="newsletter-wrapper">
+        <div class="newsletter-content">
+          <div class="newsletter-badge">Delivered monthly</div>
+          <h2>Email Newsletter</h2>
+          <p>
+            My thoughts on soccer development, match analysis, and anything else
+            I feel like talking about.
+          </p>
+          <p class="unsubscribe-note">Unsubscribe at any time.</p>
+          <button class="btn btn-primary">Subscribe</button>
+        </div>
+        <div class="newsletter-image">
+          <img src="/newsletter-image.jpg" alt="Newsletter" />
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Hero Profile Section */
+  .hero-profile {
+    padding: 5rem 0 4rem; /* Adjusted from 6rem to match example spacing */
+    position: relative;
+    background: radial-gradient(
+      circle at center,
+      rgba(255, 255 255 0.1) 0%,
+      rgba(0, 0, 0, 0) 70%
+    );
   }
 
-  /* Set header styles to dark mode */
-  .dark-theme header {
-    background-color: #1a1a1a !important;
-    color: white !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
-  }
-
-  .dark-theme header a {
-    color: white !important;
-  }
-
-  .dark-theme header a.active {
-    border-bottom-color: var(--accent) !important;
-  }
-
-  .dark-theme header svg {
-    fill: white !important;
-  }
-
-  /* Global body styles */
-  body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    margin: 0;
-    padding: 0;
-  }
-
-  main {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 1rem;
-  }
-
-  /* Hero Section - Red gradient */
-  .hero {
-    background: linear-gradient(135deg, var(--accent), #7a0000);
-    color: white;
-    padding: 3rem 1.5rem;
-    margin-bottom: 2.5rem;
-    text-align: center;
-    border-radius: 8px;
-  }
-
-  .hero h1 {
-    font-size: 2.75rem;
-    margin-bottom: 1rem;
-    font-weight: 800;
-  }
-
-  .hero p {
-    font-size: 1.2rem;
-    max-width: 600px;
-    margin: 0 auto;
-    opacity: 0.9;
-  }
-
-  /* Content Sections */
-  .content-section {
-    margin-bottom: 3.5rem;
-  }
-
-  .section-header {
+  .profile-wrapper {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 0.5rem;
+    gap: 2.5rem;
   }
 
-  .section-header h2 {
-    font-size: 1.8rem;
-    color: var(--accent);
-    margin: 0;
+  .profile-image {
+    flex-shrink: 0;
+    transition: transform 0.6s ease-in-out;
   }
 
-  .view-all {
-    color: var(--accent);
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.2s;
+  .profile-image:hover {
+    transform: rotate(360deg);
   }
 
-  .view-all:hover {
-    filter: brightness(var(--hover-brightness));
+  .profile-image img {
+    width: 140px; /* Increased from 130px to match example */
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #fcec52; /* Added golden border like the example */
   }
 
-  /* Video Grid */
-  .video-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
+  .profile-content h1 {
+    font-size: 3rem; /* Increased from 2.5rem to match example */
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    line-height: 1.1; /* Added to improve text spacing */
   }
 
-  .video-card {
+  .hand-emoji {
+    display: inline-block;
+    /* Removed animation */
+  }
+
+  .name {
+    color: #fcec52;
+    font-size: 3rem; /* Explicitly set font size to match h1 */
+  }
+
+  .welcome-text {
+    font-size: 1.25rem; /* Increased from 1.125rem */
+    margin-bottom: 1rem; /* Increased from 0.75rem */
+    padding-left: 60px;
+  }
+
+  .welcome-text a {
+    color: #ff0000;
+  }
+
+  .welcome-text a:hover {
+    text-decoration: underline;
+  }
+
+  .bio {
+    font-size: 1.125rem; /* Added explicit font size */
+    line-height: 1.5; /* Added line height */
+    margin-bottom: 1rem; /* Increased from 0.75rem */
+    max-width: 640px; /* Increased from 600px */
+    padding-left: 60px;
+  }
+
+  .work-info {
+    font-size: 1.125rem; /* Added explicit font size */
+    line-height: 1.5; /* Added line height */
+    color: var(--text-secondary);
+    max-width: 640px; /* Added max width to match bio */
+  }
+
+  /* Section Spacing */
+  .projects-section,
+  .videos-section,
+  .newsletter-section {
+    padding: 4rem 0;
+  }
+
+  /* Project Cards */
+  .avatar-small {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+  }
+
+  .card-tag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--bg-card);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .project-meta {
+    margin-top: 1rem;
+    display: flex;
+    gap: 1rem;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+  }
+
+  .content-card {
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: var(--card-shadow);
-    background: var(--card-bg);
+    background-color: var(--bg-card, #1a1b26);
+    /* Thicker yellow border - increased from 2px to 4px */
+    border: 3px solid #7ccdef; /* Bright yellow border with increased thickness */
+    /* Add some subtle glow effect */
     transition:
       transform 0.3s ease,
       box-shadow 0.3s ease;
   }
 
-  .video-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-  }
-
-  .video-thumbnail {
-    position: relative;
-    height: 180px;
-    overflow: hidden;
-  }
-
-  .video-thumbnail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-
-  .video-card:hover .video-thumbnail img {
-    transform: scale(1.05);
-  }
-
-  .play-button {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(229, 9, 20, 0.8);
-    border-radius: 50%;
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    opacity: 0.9;
-    transition:
-      opacity 0.2s,
-      transform 0.2s;
-  }
-
-  .video-card:hover .play-button {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1.1);
-  }
-
-  .video-card h3 {
-    padding: 1rem;
-    margin: 0;
-    color: var(--text-color);
-    font-size: 1.1rem;
-    line-height: 1.4;
-  }
-
-  .video-card a {
-    text-decoration: none;
-  }
-
-  /* Podcast Section */
-  .podcast-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .podcast-card {
-    background: var(--card-bg);
-    border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: var(--card-shadow);
-    transition: transform 0.3s ease;
-  }
-
-  .podcast-card:hover {
-    transform: translateY(-6px);
-  }
-
-  .podcast-card h3 {
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-    color: var(--text-color);
-  }
-
-  .podcast-card p {
-    margin-bottom: 1rem;
-    color: var(--text-secondary);
-  }
-
-  /* Twitter Feed Wall */
-  .twitter-wall {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .tweet-card {
-    background: var(--card-bg);
-    border-radius: 12px;
-    overflow: hidden;
-    padding: 1rem;
-    box-shadow: var(--card-shadow);
-    transition: transform 0.3s ease;
-  }
-
-  .tweet-card:hover {
+  .content-card:hover {
     transform: translateY(-5px);
   }
 
-  .tweet-header {
+  /* Podcast Banner */
+  .podcast-banner {
+    background-color: var(--bg-card);
+    padding: 4rem 0;
+    overflow: hidden;
+    background-image: url("./spotify-img.jpg");
+    /* Change these background properties */
+    background-size: cover; /* Covers the entire element */
+    background-position: 75% center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents repeating */
+    position: relative;
+  }
+
+  .podcast-banner::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(
+      0,
+      0,
+      0,
+      0.4
+    ); /* Adjust opacity here (0.4 = 60% transparent) */
+    z-index: 1;
+  }
+
+  .podcast-banner-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.8rem;
+    flex-direction: column;
+    align-items: flex-start; /* Align to the left side of the container */
+    margin-left: auto; /* This pushes content to the right */
+    margin-right: 5%; /* Space from the right edge */
+    width: 65%; /* Adjust width as needed */
   }
 
-  .tweet-author {
+  /* Banner borders */
+  .banner-border {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    z-index: 10;
+  }
+
+  .banner-border.top {
+    top: 0;
+  }
+
+  .banner-border.bottom {
+    bottom: 0;
+  }
+
+  .banner-wrapper {
     display: flex;
     align-items: center;
+    gap: 3rem;
+    position: relative;
+    z-index: 10;
   }
 
-  .profile-img {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    margin-right: 0.8rem;
-  }
-
-  .author-name {
-    display: block;
-    font-weight: 700;
-    color: var(--text-color);
-  }
-
-  .author-handle {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-  }
-
-  .twitter-logo {
-    color: #1da1f2;
-  }
-
-  .tweet-content {
-    font-size: 1rem;
-    line-height: 1.5;
-    margin-bottom: 1rem;
-  }
-
-  .tweet-image {
-    margin-bottom: 1rem;
+  .banner-logo {
+    flex-shrink: 0;
+    position: relative;
+    width: 140px;
+    height: 140px;
     border-radius: 8px;
     overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
   }
 
-  .tweet-image img {
+  .banner-logo:hover {
+    transform: scale(1.05);
+  }
+
+  .banner-logo img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
   }
 
-  .tweet-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: var(--text-secondary);
-    font-size: 0.9rem;
+  .banner-content {
+    flex: 1;
   }
 
-  .tweet-stats {
+  .banner-badge {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 0.875rem;
+    padding: 0.25rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+  }
+
+  .banner-content h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    color: white;
+  }
+
+  .banner-content p {
+    margin-bottom: 1.5rem;
+    max-width: 600px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .btn-secondary {
+    background-color: #ff0000; /* Red color for the podcast */
+    color: white;
+  }
+
+  .btn-secondary:hover {
+    background-color: #ff0000;
+    transform: scale(1.05);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 960px) {
+    .banner-wrapper {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .banner-content p {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .banner-content h2 {
+      font-size: 2rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .course-banner {
+      padding: 3rem 0;
+    }
+
+    .banner-logo {
+      width: 120px;
+      height: 120px;
+    }
+  }
+
+  /* Twitter card specific styles */
+  .tweet-thumbnail {
+    position: relative;
+    background-color: #15202b; /* Twitter dark mode background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px; /* Maintain same height as video thumbnails */
+  }
+
+  .tweet-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      #1da1f2,
+      #14171a
+    ); /* Twitter blue gradient */
+    opacity: 0.2; /* Subtle gradient */
+  }
+
+  .twitter-icon i {
+    color: #1da1f2; /* Twitter blue */
+  }
+
+  /* Style for tweet text */
+  .tweet-text {
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin: 8px 0 12px;
+    color: #8b98a5;
+  }
+
+  /* Hashtags and mentions */
+  .hashtag,
+  .mention {
+    color: #1da1f2;
+    font-weight: 500;
+  }
+
+  /* Adjust card meta for tweets */
+  .content-card .card-meta {
+    display: flex;
+    gap: 15px;
+  }
+
+  /* Hover effect */
+  .content-card:hover .twitter-icon i {
+    transform: scale(1.1);
+  }
+
+  /* If your cards don't already have transition */
+  .content-card,
+  .icon-play i {
+    transition: all 0.3s ease;
+  }
+  /* Newsletter Section */
+  .newsletter-section {
+    padding: 4rem 0;
+    overflow: hidden;
+    background-image: url("./newsletter.jpg");
+    /* Change these background properties */
+    background-size: cover; /* Covers the entire element */
+    background-position: 75% center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents repeating */
+    position: relative;
+  }
+
+  .newsletter-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .newsletter-content {
+    flex: 1;
+  }
+
+  .newsletter-image {
+    flex: 1;
+    display: none;
+  }
+
+  .newsletter-image img {
+    border-radius: 12px;
+    width: 100%;
+  }
+
+  .newsletter-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+
+  .newsletter-content h2 {
+    font-size: 2.25rem;
+    margin-bottom: 1rem;
+    font-weight: 800; /* Added explicit font weight */
+  }
+
+  .newsletter-content p {
+    margin-bottom: 0.5rem;
+    max-width: 540px;
+    color: #fff;
+    font-size: 1.125rem; /* Added font size */
+  }
+
+  .unsubscribe-note {
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Section titles */
+  .section-title {
+    font-size: 1.75rem;
+    font-weight: 800; /* Changed from 700 to 800 to match example */
+    margin-bottom: 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-primary);
+  }
+
+  /* Responsive */
+  @media (max-width: 960px) {
+    .profile-wrapper {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .banner-wrapper,
+    .newsletter-wrapper {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .banner-content p,
+    .newsletter-content p {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-profile {
+      padding: 4rem 0 3rem;
+    }
+
+    .profile-content h1,
+    .name {
+      font-size: 2.5rem; /* Adjusted to keep h1 and name consistent */
+    }
+
+    .bio,
+    .work-info {
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 0; /* Remove padding on mobile for centered alignment */
+    }
+
+    .welcome-text {
+      padding-left: 0; /* Remove padding on mobile for centered alignment */
+    }
+  }
+
+  @media (max-width: 768px) {
+    .section-title {
+      font-size: 1.5rem;
+    }
+  }
+
+  /* Project Section Styles */
+  .projects-section {
+    padding: 4rem 0;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #1a2236; /* Dark background, adjust to match video cards */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    border: 1px solid #2d3748; /* Subtle border */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-shadow);
+  }
+
+  .project-thumbnail {
+    position: relative;
+    height: 240px;
+    padding: 1.5rem;
+    color: white;
+    overflow: hidden;
+  }
+
+  .project-tag {
+    display: inline-block;
+    background-color: #84cc16;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-title {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .project-subtitle {
+    font-size: 1.25rem;
+    margin-top: 0.25rem;
+  }
+
+  .tag {
+    display: inline-block;
+    background-color: #18181b;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  .project-number {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 1.5rem;
+    background-color: white;
+    color: #18181b;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.125rem;
+  }
+
+  .project-label {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 6rem;
+    font-size: 0.875rem;
+    opacity: 0.9;
+  }
+
+  .project-badge {
+    display: inline-block;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 0.35rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+    margin-top: 2rem;
+  }
+
+  .project-image {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    max-height: 70%;
+    object-fit: contain;
+  }
+
+  .tic-tac-image {
+    width: 40%;
+  }
+
+  .avatar-tag {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+  }
+
+  .avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .project-content {
+    padding: 1.5rem;
+  }
+
+  .project-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+  }
+
+  .project-content p {
+    color: var(--text-secondary);
+    margin-bottom: 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  .project-links {
     display: flex;
     gap: 1rem;
   }
 
-  .tweet-stats span {
-    display: flex;
+  .project-link {
+    display: inline-flex;
     align-items: center;
-    gap: 0.3rem;
+    gap: 0.35rem;
+    color: #ffff;
+    font-size: 0.875rem;
+    transition: color 0.2s;
   }
 
-  .tweet-date {
-    font-size: 0.8rem;
+  .project-link i {
+    color: #ff0000;
   }
 
-  /* Footer styles for dark mode */
-  .dark-theme footer {
-    background-color: #1a1a1a !important;
-    color: white !important;
+  .project-link:hover {
+    color: var(--text-primary);
   }
 
-  .dark-theme footer a {
-    color: var(--accent) !important;
+  .view-more {
+    margin-top: 2rem;
+    text-align: center;
+    color: #ff0000;
+  }
+
+  .view-more-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #ff0000;
+    text-decoration: none;
+    font-weight: 500;
+    transition: gap 0.2s;
+  }
+
+  .view-more-link:hover {
+    gap: 0.75rem;
   }
 
   /* Responsive adjustments */
+  @media (max-width: 1024px) {
+    .projects-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
   @media (max-width: 768px) {
-    .hero h1 {
-      font-size: 2rem;
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .profile-content h1,
+    .name {
+      font-size: 2rem; /* Further reduced for small screens */
     }
 
-    .hero p {
+    .welcome-text {
+      font-size: 1.125rem;
+    }
+
+    .bio,
+    .work-info {
       font-size: 1rem;
     }
+  }
 
-    .section-header h2 {
-      font-size: 1.5rem;
+  @media (max-width: 960px) {
+    .banner-wrapper {
+      flex-direction: column;
+      text-align: center;
     }
 
-    .podcast-grid {
-      grid-template-columns: 1fr;
+    .banner-content p {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .banner-content h2 {
+      font-size: 2rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .podcast-banner {
+      padding: 3rem 0;
+    }
+
+    .banner-logo {
+      width: 120px;
+      height: 120px;
     }
   }
 </style>
