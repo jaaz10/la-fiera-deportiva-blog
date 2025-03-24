@@ -13,17 +13,28 @@
       </a>
 
       <nav class="main-nav">
-        <a href="/projects">About</a>
-        <a href="/blog">Podcast</a>
-        <a href="/course"
+        <a href="#">About</a>
+        <a
+          href="https://open.spotify.com/playlist/0tRWrUiHJHfgSbXQ5Whu9N"
+          target="_blank"
+          >Podcast <i class="fa-solid fa-arrow-up-right-from-square"></i></a
+        >
+        <a href="https://www.chicagofirefc.com/tickets/" target="_blank"
           >Chicago Fire <i class="fa-solid fa-arrow-up-right-from-square"
           ></i></a
         >
-        <a href="https://www.youtube.com/@LAFIERADEPORTIVA" target="_blank"
+        <a href="https://chicagostars.com/tickets/" target="_blank"
           >Chicago Stars <i class="fa-solid fa-arrow-up-right-from-square"
           ></i></a
         >
       </nav>
+
+      <!-- Add hamburger button for mobile -->
+      <button class="hamburger-btn" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </div>
   </div>
   <div class="header-border"></div>
@@ -93,6 +104,28 @@
     color: rgba(255, 255, 255, 0.8);
   }
 
+  /* Hamburger button styles */
+  .hamburger-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 100;
+  }
+
+  .hamburger-btn span {
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
   .header-border {
     position: absolute;
     bottom: 0;
@@ -102,17 +135,19 @@
     background-color: #ff0000; /* Red border */
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 992px) {
     .main-nav {
-      gap: 1.25rem;
+      display: none; /* Hide main nav on mobile */
     }
 
+    .hamburger-btn {
+      display: flex; /* Show hamburger on mobile */
+    }
+  }
+
+  @media (max-width: 768px) {
     .logo {
       font-size: 1.25rem;
-    }
-
-    .main-nav a {
-      font-size: 1rem;
     }
   }
 </style>
