@@ -20,11 +20,15 @@
           >Podcast <i class="fa-solid fa-arrow-up-right-from-square"></i></a
         >
         <a href="https://www.chicagofirefc.com/tickets/" target="_blank"
-          >Chicago Fire <i class="fa-solid fa-arrow-up-right-from-square"
+          ><div class="logo-icon-2">
+            <img src="/fire-logo.png" alt="La Fiera Deportiva Logo" />
+          </div>Chicago Fire <i class="fa-solid fa-arrow-up-right-from-square"
           ></i></a
         >
         <a href="https://chicagostars.com/tickets/" target="_blank"
-          >Chicago Stars <i class="fa-solid fa-arrow-up-right-from-square"
+          ><div class="logo-icon-2">
+            <img src="/stars-logo.png" alt="La Fiera Deportiva Logo" />
+          </div>Chicago Stars <i class="fa-solid fa-arrow-up-right-from-square"
           ></i></a
         >
       </nav>
@@ -85,6 +89,23 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  /* New class for nav icons */
+  .logo-icon-2 {
+    width: 1.8rem;
+    height: 1.8rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.4rem;
+    vertical-align: middle;
+  }
+
+  .logo-icon-2 img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 
   .main-nav {

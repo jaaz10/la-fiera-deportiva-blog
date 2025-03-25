@@ -53,9 +53,15 @@ const { title, description } = Astro.props;
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="/about">About</a></li>
-          <li><a href="/podcast">Podcast</a></li>
-          <li><a href="/chicago-fire">Chicago Fire</a></li>
-          <li><a href="/chicago-stars">Chicago Stars</a></li>
+          <li>
+            <a href="https://open.spotify.com/playlist/0tRWrUiHJHfgSbXQ5Whu9N"
+              >Podcast</a
+            >
+          </li>
+          <li>
+            <a href="https://www.chicagofirefc.com/tickets/">Chicago Fire</a>
+          </li>
+          <li><a href="https://chicagostars.com/tickets/">Chicago Stars</a></li>
         </ul>
       </nav>
       <div class="menu-cta">
@@ -64,10 +70,10 @@ const { title, description } = Astro.props;
           class="menu-btn"
           target="_blank"
         >
-          View Channel <i class="fa-solid fa-arrow-right"></i>
+          View Youtube Channel <i class="fa-solid fa-arrow-right"></i>
         </a>
         <a href="/tweets" class="menu-btn">
-          See All Tweets <i class="fa-solid fa-arrow-right"></i>
+          See All Tweets on X<i class="fa-solid fa-arrow-right"></i>
         </a>
       </div>
       <div class="menu-socials">
@@ -120,11 +126,9 @@ const { title, description } = Astro.props;
 
     // Toggle menu function
     function toggleMenu() {
-      if (mobileMenu && overlay) {
-        mobileMenu.classList.toggle("active");
-        overlay.classList.toggle("active");
-        document.body.classList.toggle("menu-open");
-      }
+      if (mobileMenu) mobileMenu.classList.toggle("active");
+      if (overlay) overlay.classList.toggle("active");
+      document.body.classList.toggle("menu-open");
     }
 
     // Open menu when hamburger is clicked (added in Header.astro)
