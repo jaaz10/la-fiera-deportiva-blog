@@ -1,1260 +1,2336 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+
+// Hard-coded standings data for MLS (Eastern and Western Conference)
+const mlsEasternStandings = [
+  {
+    position: 1,
+    team: "Philadelphia",
+    played: 5,
+    won: 4,
+    drawn: 0,
+    lost: 1,
+    gf: 12,
+    ga: 6,
+    gd: 6,
+    points: 12,
+  },
+  {
+    position: 2,
+    team: "Charlotte",
+    played: 5,
+    won: 3,
+    drawn: 1,
+    lost: 1,
+    gf: 10,
+    ga: 4,
+    gd: 6,
+    points: 10,
+  },
+  {
+    position: 3,
+    team: "Inter Miami",
+    played: 4,
+    won: 3,
+    drawn: 1,
+    lost: 0,
+    gf: 9,
+    ga: 4,
+    gd: 5,
+    points: 10,
+  },
+  {
+    position: 4,
+    team: "Nashville",
+    played: 5,
+    won: 3,
+    drawn: 1,
+    lost: 1,
+    gf: 8,
+    ga: 3,
+    gd: 5,
+    points: 10,
+  },
+  {
+    position: 5,
+    team: "Chicago",
+    played: 5,
+    won: 3,
+    drawn: 1,
+    lost: 1,
+    gf: 12,
+    ga: 9,
+    gd: 3,
+    points: 10,
+  },
+  {
+    position: 6,
+    team: "Columbus",
+    played: 5,
+    won: 2,
+    drawn: 3,
+    lost: 0,
+    gf: 6,
+    ga: 3,
+    gd: 3,
+    points: 9,
+  },
+  {
+    position: 7,
+    team: "NY Red Bulls",
+    played: 5,
+    won: 2,
+    drawn: 2,
+    lost: 1,
+    gf: 6,
+    ga: 4,
+    gd: 2,
+    points: 8,
+  },
+  {
+    position: 8,
+    team: "New York City",
+    played: 5,
+    won: 2,
+    drawn: 2,
+    lost: 1,
+    gf: 6,
+    ga: 5,
+    gd: 1,
+    points: 8,
+  },
+  {
+    position: 9,
+    team: "Orlando City",
+    played: 5,
+    won: 2,
+    drawn: 1,
+    lost: 2,
+    gf: 13,
+    ga: 11,
+    gd: 2,
+    points: 7,
+  },
+  {
+    position: 10,
+    team: "Cincinnati",
+    played: 5,
+    won: 2,
+    drawn: 1,
+    lost: 2,
+    gf: 6,
+    ga: 8,
+    gd: -2,
+    points: 7,
+  },
+  {
+    position: 11,
+    team: "D.C. United",
+    played: 5,
+    won: 1,
+    drawn: 3,
+    lost: 1,
+    gf: 7,
+    ga: 9,
+    gd: -2,
+    points: 6,
+  },
+  {
+    position: 12,
+    team: "Atlanta United",
+    played: 5,
+    won: 1,
+    drawn: 2,
+    lost: 2,
+    gf: 6,
+    ga: 8,
+    gd: -2,
+    points: 5,
+  },
+  {
+    position: 13,
+    team: "New England",
+    played: 4,
+    won: 0,
+    drawn: 1,
+    lost: 3,
+    gf: 1,
+    ga: 5,
+    gd: -4,
+    points: 1,
+  },
+  {
+    position: 14,
+    team: "Toronto",
+    played: 5,
+    won: 0,
+    drawn: 1,
+    lost: 4,
+    gf: 6,
+    ga: 12,
+    gd: -6,
+    points: 1,
+  },
+  {
+    position: 15,
+    team: "Montréal",
+    played: 5,
+    won: 0,
+    drawn: 1,
+    lost: 4,
+    gf: 2,
+    ga: 9,
+    gd: -7,
+    points: 1,
+  },
+];
+
+const mlsWesternStandings = [
+  {
+    position: 1,
+    team: "Vancouver",
+    played: 5,
+    won: 4,
+    drawn: 0,
+    lost: 1,
+    gf: 10,
+    ga: 5,
+    gd: 5,
+    points: 12,
+  },
+  {
+    position: 2,
+    team: "Austin",
+    played: 5,
+    won: 3,
+    drawn: 0,
+    lost: 2,
+    gf: 4,
+    ga: 3,
+    gd: 1,
+    points: 9,
+  },
+  {
+    position: 3,
+    team: "LAFC",
+    played: 5,
+    won: 3,
+    drawn: 0,
+    lost: 2,
+    gf: 6,
+    ga: 6,
+    gd: 0,
+    points: 9,
+  },
+  {
+    position: 4,
+    team: "San Diego FC",
+    played: 5,
+    won: 2,
+    drawn: 2,
+    lost: 1,
+    gf: 7,
+    ga: 4,
+    gd: 3,
+    points: 8,
+  },
+  {
+    position: 5,
+    team: "St. Louis",
+    played: 5,
+    won: 2,
+    drawn: 2,
+    lost: 1,
+    gf: 4,
+    ga: 1,
+    gd: 3,
+    points: 8,
+  },
+  {
+    position: 6,
+    team: "Minnesota",
+    played: 5,
+    won: 2,
+    drawn: 2,
+    lost: 1,
+    gf: 7,
+    ga: 6,
+    gd: 1,
+    points: 8,
+  },
+  {
+    position: 7,
+    team: "Colorado",
+    played: 5,
+    won: 2,
+    drawn: 2,
+    lost: 1,
+    gf: 6,
+    ga: 7,
+    gd: -1,
+    points: 8,
+  },
+  {
+    position: 8,
+    team: "FC Dallas",
+    played: 5,
+    won: 2,
+    drawn: 1,
+    lost: 2,
+    gf: 7,
+    ga: 8,
+    gd: -1,
+    points: 7,
+  },
+  {
+    position: 9,
+    team: "Portland",
+    played: 5,
+    won: 2,
+    drawn: 1,
+    lost: 2,
+    gf: 6,
+    ga: 7,
+    gd: -1,
+    points: 7,
+  },
+  {
+    position: 10,
+    team: "San Jose",
+    played: 5,
+    won: 2,
+    drawn: 0,
+    lost: 3,
+    gf: 8,
+    ga: 8,
+    gd: 0,
+    points: 6,
+  },
+  {
+    position: 11,
+    team: "Real Salt Lake",
+    played: 5,
+    won: 2,
+    drawn: 0,
+    lost: 3,
+    gf: 5,
+    ga: 9,
+    gd: -4,
+    points: 6,
+  },
+  {
+    position: 12,
+    team: "Seattle Sounders",
+    played: 5,
+    won: 1,
+    drawn: 2,
+    lost: 2,
+    gf: 7,
+    ga: 7,
+    gd: 0,
+    points: 5,
+  },
+  {
+    position: 13,
+    team: "Houston Dynamo",
+    played: 5,
+    won: 0,
+    drawn: 2,
+    lost: 3,
+    gf: 3,
+    ga: 8,
+    gd: -5,
+    points: 2,
+  },
+  {
+    position: 14,
+    team: "LA Galaxy",
+    played: 5,
+    won: 0,
+    drawn: 2,
+    lost: 3,
+    gf: 4,
+    ga: 10,
+    gd: -6,
+    points: 2,
+  },
+  {
+    position: 15,
+    team: "Sporting KC",
+    played: 5,
+    won: 0,
+    drawn: 1,
+    lost: 4,
+    gf: 5,
+    ga: 10,
+    gd: -5,
+    points: 1,
+  },
+];
+
+// Hard-coded standings data for NWSL
+const nwslStandings = [
+  {
+    position: 1,
+    team: "Orlando Pride",
+    played: 2,
+    won: 2,
+    drawn: 0,
+    lost: 0,
+    gf: 8,
+    ga: 0,
+    gd: 8,
+    points: 6,
+  },
+  {
+    position: 2,
+    team: "KC Current",
+    played: 2,
+    won: 2,
+    drawn: 0,
+    lost: 0,
+    gf: 5,
+    ga: 1,
+    gd: 4,
+    points: 6,
+  },
+  {
+    position: 3,
+    team: "Bay FC",
+    played: 2,
+    won: 1,
+    drawn: 1,
+    lost: 0,
+    gf: 3,
+    ga: 1,
+    gd: 2,
+    points: 4,
+  },
+  {
+    position: 4,
+    team: "San Diego Wave",
+    played: 2,
+    won: 1,
+    drawn: 1,
+    lost: 0,
+    gf: 4,
+    ga: 3,
+    gd: 1,
+    points: 4,
+  },
+  {
+    position: 5,
+    team: "Seattle Reign FC",
+    played: 2,
+    won: 1,
+    drawn: 1,
+    lost: 0,
+    gf: 3,
+    ga: 2,
+    gd: 1,
+    points: 4,
+  },
+  {
+    position: 6,
+    team: "Houston Dash",
+    played: 2,
+    won: 1,
+    drawn: 0,
+    lost: 1,
+    gf: 3,
+    ga: 3,
+    gd: 0,
+    points: 3,
+  },
+  {
+    position: 7,
+    team: "Washington Spirit",
+    played: 2,
+    won: 1,
+    drawn: 0,
+    lost: 1,
+    gf: 2,
+    ga: 3,
+    gd: -1,
+    points: 3,
+  },
+  {
+    position: 8,
+    team: "Angel City FC",
+    played: 2,
+    won: 0,
+    drawn: 2,
+    lost: 0,
+    gf: 2,
+    ga: 2,
+    gd: 0,
+    points: 2,
+  },
+  {
+    position: 9,
+    team: "Utah Royals FC",
+    played: 2,
+    won: 0,
+    drawn: 1,
+    lost: 1,
+    gf: 3,
+    ga: 4,
+    gd: -1,
+    points: 1,
+  },
+  {
+    position: 10,
+    team: "North Carolina Courage",
+    played: 2,
+    won: 0,
+    drawn: 1,
+    lost: 1,
+    gf: 2,
+    ga: 3,
+    gd: -1,
+    points: 1,
+  },
+  {
+    position: 11,
+    team: "Portland Thorns",
+    played: 2,
+    won: 0,
+    drawn: 1,
+    lost: 1,
+    gf: 2,
+    ga: 4,
+    gd: -2,
+    points: 1,
+  },
+  {
+    position: 12,
+    team: "Racing Louisville",
+    played: 2,
+    won: 0,
+    drawn: 1,
+    lost: 1,
+    gf: 1,
+    ga: 3,
+    gd: -2,
+    points: 1,
+  },
+  {
+    position: 13,
+    team: "Gotham FC",
+    played: 2,
+    won: 0,
+    drawn: 1,
+    lost: 1,
+    gf: 1,
+    ga: 3,
+    gd: -2,
+    points: 1,
+  },
+  {
+    position: 14,
+    team: "Chicago Stars",
+    played: 2,
+    won: 0,
+    drawn: 0,
+    lost: 2,
+    gf: 1,
+    ga: 8,
+    gd: -7,
+    points: 0,
+  },
+];
+
+// Current date for last updated info
+const lastUpdated = new Date().toLocaleString("en-US", {
+  dateStyle: "medium",
+  timeStyle: "short",
+});
 ---
 
 <Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <!-- Hero Profile Section -->
-  <section class="hero-profile">
+  <section class="hero-section">
     <div class="container">
-      <div class="profile-wrapper">
-        <div class="profile-image">
-          <img src="/logo-no-bg.png" alt="Hernan" />
+      <div class="news-style-hero">
+        <div class="hero-title">
+          <h2>ÚLTIMAS NOTICIAS</h2>
         </div>
-        <div class="profile-content">
-          <h1>
-            <span class="hand-emoji">👋</span> Hola! I'm <span class="name"
-              >Hernan</span
-            >.
-          </h1>
-          <p class="welcome-text">
-            Welcome to <span>La Fiera Deportiva</span>!
-          </p>
-          <p class="bio">
-            Broadcasting Radio, TV and Internet Streaming Chicago Soccer Teams
-            and International Soccer Tournaments, La Fiera Deportiva Sports Page
-          </p>
+
+        <div class="hero-content">
+          <!-- Main featured article card (left side) -->
+          <a href="/articles/featured-article" class="hero-main-card">
+            <div class="video-thumbnail-1">
+              <span class="category-tag-2">MLS</span>
+            </div>
+            <div class="card-content">
+              <h2>Article 1</h2>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              </p>
+            </div>
+          </a>
+
+          <div class="hero-secondary-cards">
+            <!-- Top secondary article card -->
+            <a href="/articles/secondary-article-1" class="hero-main-card">
+              <div class="video-thumbnail-2">
+                <span class="category-tag-2">NWSL</span>
+              </div>
+              <div class="card-content">
+                <h3>Article 2</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              </div>
+            </a>
+
+            <!-- Bottom secondary article card -->
+            <a href="/articles/secondary-article-2" class="hero-main-card">
+              <div class="video-thumbnail-2">
+                <span class="category-tag-2">MLS</span>
+              </div>
+              <div class="card-content">
+                <h3>Article 3</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+              </div>
+            </a>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Recent Videos Section -->
+  <!-- VIDEOS DESTACADOS-->
   <section class="videos-section">
     <div class="container">
-      <h2 class="section-title">Recent Videos</h2>
-      <div class="grid grid-3">
+      <div class="section-title">
+        <h2>VIDEOS DESTACADOS</h2>
+      </div>
+
+      <div class="videos-grid">
         <!-- Video Card 1 -->
-        <div class="content-card">
-          <a
-            href="https://youtu.be/F36FYtY7s58?si=e_zwG1LhSKAoWIDQ"
-            target="_blank"
-          >
-            <div class="card-thumbnail">
-              <img src="/guti.png" alt="Video Title" />
-              <div class="icon-play">
-                <i class="fas fa-play-circle"></i>
-              </div>
-            </div>
-            <div class="card-body">
-              <h3>
-                Brian Gutierrez ( Guty ) Anoto dos goles en Columbus al Crew en
-                Press Conference Chicago Fire FC
-              </h3>
-              <div class="card-meta">
-                <span class="project-link"
-                  ><i class="fa-solid fa-video"></i> Video</span
-                >
-              </div>
-            </div>
-          </a>
-        </div>
+        <a href="/videos/video-1" class="video-card">
+          <div class="video-thumbnail">
+            <img src="/guti.png" alt="Brian Gutierrez Interview" />
+            <span class="category-tag-1">MLS</span>
+          </div>
+          <div class="video-info">
+            <h3>Brian Gutierrez (Guty) Anoto dos goles en Columbus al Crew</h3>
+          </div>
+        </a>
 
         <!-- Video Card 2 -->
-        <div class="content-card">
-          <a
-            href="https://youtu.be/d8MJRzcsWvs?si=rcFRsIMWIigYsVPb"
-            target="_blank"
-          >
-            <div class="card-thumbnail">
-              <img src="/lfd-show.png" alt="Video Title" />
-              <div class="icon-play">
-                <i class="fas fa-play-circle"></i>
-              </div>
-            </div>
-            <div class="card-body">
-              <h3>
-                La Fiera Deportiva 2025 Chicago Stars FC & Chicago Fire FC
-              </h3>
-              <div class="card-meta">
-                <span class="project-link"
-                  ><i class="fa-solid fa-video"></i> Video</span
-                >
-              </div>
-            </div>
-          </a>
-        </div>
+        <a href="/videos/video-2" class="video-card">
+          <div class="video-thumbnail">
+            <img src="/lfd-show.png" alt="Chicago Stars FC & Chicago Fire FC" />
+            <span class="category-tag-1">Podcast</span>
+          </div>
+          <div class="video-info">
+            <h3>La Fiera Deportiva 2025 Chicago Stars FC & Chicago Fire FC</h3>
+          </div>
+        </a>
 
         <!-- Video Card 3 -->
-        <div class="content-card">
-          <a
-            href="https://youtu.be/ZalRGZf4sME?si=8yJ9kHprpzwPrz1N"
-            target="_blank"
+        <a href="/videos/video-3" class="video-card">
+          <div class="video-thumbnail">
+            <img src="/lfd-show-2.png" alt="AranaTV Chicago Fire" />
+            <span class="category-tag-1">Podcast</span>
+          </div>
+          <div class="video-info">
+            <h3>
+              La Fiera Deportiva 2025 En AranaTV El Chicago Fire FC & Las
+              Chicago Stars FC
+            </h3>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEOS QUE TE PUEDEN INTERESAR -->
+  <section class="featured-video-section">
+    <div class="container">
+      <h2 class="section-title">VIDEOS QUE TE PUEDEN INTERESAR</h2>
+
+      <div class="main-video-container">
+        <div id="main-video-player">
+          <!-- Initial YouTube embed - replace VIDEO_ID with your actual YouTube video ID -->
+          <iframe
+            id="mainVideoFrame"
+            width="100%"
+            height="100%"
+            src="https://www.youtube.com/embed/F36FYtY7s58?si=L7pmFVhnn7a7o_9_"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
           >
-            <div class="card-thumbnail">
-              <img src="/lfd-show-2.png" alt="Video Title" />
-              <div class="icon-play">
-                <i class="fas fa-play-circle"></i>
+          </iframe>
+        </div>
+        <h3 id="mainVideoTitle" class="main-video-title">
+          Brian Gutierrez (Guty) Anotó dos goles en Columbus al Crew en Press
+          Conference Chicago Fire FC
+        </h3>
+      </div>
+
+      <section class="more-videos">
+        <div class="section-header">
+          <h2>Más Videos</h2>
+        </div>
+        <div class="carousel-container">
+          <button class="carousel-button prev">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+
+          <div class="video-carousel">
+            <div class="video-items-wrapper">
+              <!-- Video Items with Data Attributes for video IDs -->
+              <div
+                class="video-item"
+                data-video-id="F36FYtY7s58"
+                data-video-title="Argentina le dio un baile histórico a Brasil"
+              >
+                <div class="video-thumbnail">
+                  <img
+                    src="/guti.png"
+                    alt="Argentina le dio un baile histórico a Brasil"
+                  />
+                  <div class="hover-overlay">
+                    <div class="play-icon">
+                      <i class="fas fa-play"></i>
+                    </div>
+                  </div>
+                </div>
+                <h3 class="video-title">
+                  Brian Gutierrez ( Guty ) Anoto dos goles en Columbus al Crew
+                  en Press Conference Chicago Fire FC
+                </h3>
+              </div>
+
+              <div
+                class="video-item"
+                data-video-id="d8MJRzcsWvs"
+                data-video-title="Del México campeón al fracaso de los Estados Unidos"
+              >
+                <div class="video-thumbnail">
+                  <img
+                    src="/lfd-show.png"
+                    alt="Del México campeón al fracaso de los Estados Unidos"
+                  />
+                  <div class="hover-overlay">
+                    <div class="play-icon">
+                      <i class="fas fa-play"></i>
+                    </div>
+                  </div>
+                </div>
+                <h3 class="video-title">
+                  La Fiera Deportiva 2025 Chicago Stars FC & Chicago Fire FC
+                  #NWSL #MLS #lafieradeportiva
+                </h3>
+              </div>
+
+              <div
+                class="video-item"
+                data-video-id="eLYDzAzPD9Q"
+                data-video-title="Palpitamos la Final Four de la Concacaf"
+              >
+                <div class="video-thumbnail">
+                  <img
+                    src="/lfd-show-2.png"
+                    alt="Palpitamos la Final Four de la Concacaf"
+                  />
+                  <div class="hover-overlay">
+                    <div class="play-icon">
+                      <i class="fas fa-play"></i>
+                    </div>
+                  </div>
+                </div>
+                <h3 class="video-title">
+                  La Fiera Deportiva 2025 En AranavaTV El Chicago Fire FC & Las
+                  Chicago Stars FC #cf97 #vamosfire
+                </h3>
+              </div>
+
+              <div
+                class="video-item"
+                data-video-id="MD2ionR-CTc"
+                data-video-title="Nuestro homenaje al maestro Jáuregui"
+              >
+                <div class="video-thumbnail">
+                  <img
+                    src="/guti-2.png"
+                    alt="Nuestro homenaje al maestro Jáuregui"
+                  />
+                  <div class="hover-overlay">
+                    <div class="play-icon">
+                      <i class="fas fa-play"></i>
+                    </div>
+                  </div>
+                </div>
+                <h3 class="video-title">
+                  Brian Gutierrez #17. El delantero del Chicago Fire FC y de la
+                  Selección Nacional de Estados Unidos
+                </h3>
+              </div>
+
+              <div
+                class="video-item"
+                data-video-id="J4Ln2b_PDZM"
+                data-video-title="¿Tocó o no tocó el balón Julián Álvarez?"
+              >
+                <div class="video-thumbnail">
+                  <img
+                    src="/swanson.png"
+                    alt="¿Tocó o no tocó el balón Julián Álvarez?"
+                  />
+                  <div class="hover-overlay">
+                    <div class="play-icon">
+                      <i class="fas fa-play"></i>
+                    </div>
+                  </div>
+                </div>
+                <h3 class="video-title">Mallory Swanson Chicago Stars FC</h3>
               </div>
             </div>
-            <div class="card-body">
-              <h3>
-                La Fiera Deportiva 2025 En AranavaTV El Chicago Fire FC & Las
-                Chicago Stars FC
-              </h3>
-              <div class="card-meta">
-                <span class="project-link"
-                  ><i class="fa-solid fa-video"></i> Video</span
+          </div>
+
+          <button class="carousel-button next">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- STANDINGS SECTION (replacing Noticias) -->
+      <section class="standings-section">
+        <div class="container">
+          <div class="standings-header">
+            <h2 class="section-title">STANDINGS</h2>
+            <div class="standings-meta">
+              <span class="updated-text">Last updated: {lastUpdated}</span>
+              <!-- <a href="/standings" class="view-more-btn">Ver más</a> -->
+            </div>
+          </div>
+
+          <div class="standings-tabs">
+            <button class="tab-btn active" data-tab="mls">MLS</button>
+            <button class="tab-btn" data-tab="nwsl">NWSL</button>
+          </div>
+
+          <div class="standings-content">
+            <div class="tab-content active" id="mls-content">
+              <div class="conferences-selector">
+                <button class="conference-btn active" data-conference="eastern"
+                  >Eastern Conference</button
+                >
+                <button class="conference-btn" data-conference="western"
+                  >Western Conference</button
                 >
               </div>
+
+              <div class="conference-content active" id="eastern-content">
+                <div class="standings-table-container">
+                  <table class="standings-table">
+                    <thead>
+                      <tr>
+                        <th>Pos</th>
+                        <th class="team-column">Team</th>
+                        <th>GP</th>
+                        <th>W</th>
+                        <th>D</th>
+                        <th>L</th>
+                        <th>GF</th>
+                        <th>GA</th>
+                        <th>GD</th>
+                        <th>Pts</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {
+                        mlsEasternStandings.map((team) => (
+                          <tr>
+                            <td>{team.position}</td>
+                            <td class="team-column">{team.team}</td>
+                            <td>{team.played}</td>
+                            <td>{team.won}</td>
+                            <td>{team.drawn}</td>
+                            <td>{team.lost}</td>
+                            <td>{team.gf}</td>
+                            <td>{team.ga}</td>
+                            <td>{team.gd}</td>
+                            <td class="points-column">{team.points}</td>
+                          </tr>
+                        ))
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="conference-content" id="western-content">
+                <div class="standings-table-container">
+                  <table class="standings-table">
+                    <thead>
+                      <tr>
+                        <th>Pos</th>
+                        <th class="team-column">Team</th>
+                        <th>GP</th>
+                        <th>W</th>
+                        <th>D</th>
+                        <th>L</th>
+                        <th>GF</th>
+                        <th>GA</th>
+                        <th>GD</th>
+                        <th>Pts</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {
+                        mlsWesternStandings.map((team) => (
+                          <tr>
+                            <td>{team.position}</td>
+                            <td class="team-column">{team.team}</td>
+                            <td>{team.played}</td>
+                            <td>{team.won}</td>
+                            <td>{team.drawn}</td>
+                            <td>{team.lost}</td>
+                            <td>{team.gf}</td>
+                            <td>{team.ga}</td>
+                            <td>{team.gd}</td>
+                            <td class="points-column">{team.points}</td>
+                          </tr>
+                        ))
+                      }
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
-          </a>
-        </div>
-      </div>
-      <div class="view-more">
-        <a href="https://www.youtube.com/@LAFIERADEPORTIVA" target="_blank"
-          >View Channel <i class="fa-solid fa-arrow-right"></i></a
-        >
-      </div>
-    </div>
-  </section>
 
-  <!-- Featured Course Banner -->
-  <section class="podcast-banner">
-    <div class="banner-border top"></div>
-    <div class="container">
-      <div class="banner-wrapper">
-        <div class="banner-logo">
-          <img src="/logo.png" alt="La Fiera Deportiva Logo" />
-        </div>
-        <div class="banner-content">
-          <div class="banner-badge">Trusted by 1000+ fans</div>
-          <h2>La Fiera Deportiva Podcast</h2>
-          <p>
-            A premium soccer podcast exploring match analysis, player
-            interviews, and the latest developments in the beautiful game.
-          </p>
-          <a
-            href="https://open.spotify.com/playlist/0tRWrUiHJHfgSbXQ5Whu9N"
-            class="btn btn-secondary">Listen More</a
-          >
-        </div>
-      </div>
-    </div>
-    <div class="banner-border bottom"></div>
-  </section>
-
-  <!-- Recent Tweets -->
-  <section class="videos-section">
-    <div class="container">
-      <h2 class="section-title">Recent Tweets</h2>
-      <div class="grid grid-3">
-        <!-- Tweet Card 1 (Embedded Twitter Blockquote) -->
-        <div class="content-card twitter-embed-card">
-          <blockquote class="twitter-tweet" data-theme="dark">
-            <p lang="es" dir="ltr">
-              Esta noche 8:00 PM Central Time<a
-                href="https://twitter.com/AranavaTV?ref_src=twsrc%5Etfw"
-                >@AranavaTV</a
-              > en <a href="https://twitter.com/facebook?ref_src=twsrc%5Etfw"
-                >@facebook</a
-              > Live <a href="https://twitter.com/YouTube?ref_src=twsrc%5Etfw"
-                >@YouTube</a
-              > Live and <a
-                href="https://twitter.com/Spotify?ref_src=twsrc%5Etfw"
-                >@Spotify</a
-              >
-              <br />La informacion completa de Los equipos de <a
-                href="https://twitter.com/theChicagoStars?ref_src=twsrc%5Etfw"
-                >@theChicagoStars</a
-              > &amp; <a
-                href="https://twitter.com/ChicagoFire?ref_src=twsrc%5Etfw"
-                >@ChicagoFire</a
-              >
-              <a href="https://twitter.com/NWSL?ref_src=twsrc%5Etfw">@NWSL</a> &amp;
-              <a href="https://twitter.com/MLS?ref_src=twsrc%5Etfw">@MLS</a> Goles,
-              entrevistas, reacciones, novedades y mas en La Fiera Deportiva <a
-                href="https://twitter.com/hashtag/cf97?src=hash&ref_src=twsrc%5Etfw"
-                >#cf97</a
-              >
-              <a
-                href="https://twitter.com/hashtag/TheChicagoStars?src=hash&ref_src=twsrc%5Etfw"
-                >#TheChicagoStars</a
-              >
-              <a href="https://t.co/5y6nwOiO5Y">pic.twitter.com/5y6nwOiO5Y</a>
-            </p>&mdash; La Fiera Deportiva (@hernanespn) <a
-              href="https://twitter.com/hernanespn/status/1904252391739752817?ref_src=twsrc%5Etfw"
-              >March 24, 2025</a
-            >
-          </blockquote>
-          <script
-            async
-            src="https://platform.twitter.com/widgets.js"
-            charset="utf-8"></script>
-          <script
-            async
-            src="https://platform.twitter.com/widgets.js"
-            charset="utf-8"></script>
-        </div>
-
-        <!-- Tweet Card 2 (Embedded Twitter Blockquote) -->
-        <div class="content-card twitter-embed-card-2">
-          <blockquote class="twitter-tweet" data-theme="dark">
-            <p lang="es" dir="ltr">
-              Por el tercer lugar en la <a
-                href="https://twitter.com/CNationsLeague?ref_src=twsrc%5Etfw"
-                >@CNationsLeague</a
-              > NO <a href="https://twitter.com/bguti1101?ref_src=twsrc%5Etfw"
-                >@bguti1101</a
-              > por un dolor muscular <a
-                href="https://twitter.com/hashtag/ConcacafNationsLeague?src=hash&ref_src=twsrc%5Etfw"
-                >#ConcacafNationsLeague</a
-              >
-              <a
-                href="https://twitter.com/hashtag/lafieradeportiva?src=hash&ref_src=twsrc%5Etfw"
-                >#lafieradeportiva</a
-              >
-              <a
-                href="https://twitter.com/hashtag/Canada?src=hash&ref_src=twsrc%5Etfw"
-                >#Canada</a
-              >
-              <a
-                href="https://twitter.com/hashtag/USMNT?src=hash&ref_src=twsrc%5Etfw"
-                >#USMNT</a
-              >
-              <a href="https://t.co/zw3Z15x6om">pic.twitter.com/zw3Z15x6om</a>
-            </p>&mdash; La Fiera Deportiva (@hernanespn) <a
-              href="https://twitter.com/hernanespn/status/1903936702562873457?ref_src=twsrc%5Etfw"
-              >March 23, 2025</a
-            >
-          </blockquote>
-          <script
-            async
-            src="https://platform.twitter.com/widgets.js"
-            charset="utf-8"></script>
-        </div>
-
-        <!-- Tweet Card 3 (Embedded Twitter Blockquote) -->
-        <div class="content-card twitter-embed-card-2">
-          <blockquote class="twitter-tweet" data-theme="dark">
-            <p lang="es" dir="ltr">
-              Final en <a
-                href="https://twitter.com/SeatGeek?ref_src=twsrc%5Etfw"
-                >@SeatGeek</a
-              > Stadium <br />Segunda derrota en el Home Opener de las <a
-                href="https://twitter.com/theChicagoStars?ref_src=twsrc%5Etfw"
-                >@theChicagoStars</a
-              >
-              <a
-                href="https://twitter.com/hashtag/thechicagostars?src=hash&ref_src=twsrc%5Etfw"
-                >#thechicagostars</a
-              >
-              <a
-                href="https://twitter.com/hashtag/NWSL?src=hash&ref_src=twsrc%5Etfw"
-                >#NWSL</a
-              >
-              <a
-                href="https://twitter.com/hashtag/lafieradeportiva?src=hash&ref_src=twsrc%5Etfw"
-                >#lafieradeportiva</a
-              >
-              <a
-                href="https://twitter.com/hashtag/CHIvHOU?src=hash&ref_src=twsrc%5Etfw"
-                >#CHIvHOU</a
-              >
-              <a href="https://t.co/y49xKAdW0e">pic.twitter.com/y49xKAdW0e</a>
-            </p>&mdash; La Fiera Deportiva (@hernanespn) <a
-              href="https://twitter.com/hernanespn/status/1903934924773540264?ref_src=twsrc%5Etfw"
-              >March 23, 2025</a
-            >
-          </blockquote>
-        </div>
-        <div class="view-more">
-          <a
-            href="https://x.com/hernanespn?lang=ca"
-            class="view-more-link larger-cta"
-          >
-            See All Tweets <i class="fa-solid fa-arrow-right"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Newsletter Section -->
-    <section class="newsletter-section">
-      <div class="container">
-        <div class="newsletter-wrapper">
-          <div class="newsletter-content">
-            <div class="newsletter-badge">Delivered monthly</div>
-            <h2>Email Newsletter</h2>
-            <p>
-              My thoughts on soccer development, match analysis, and anything
-              else I feel like talking about.
-            </p>
-            <p class="unsubscribe-note">Unsubscribe at any time.</p>
-            <button class="btn btn-primary">Subscribe</button>
-          </div>
-          <div class="newsletter-image">
-            <img src="/newsletter-image.jpg" alt="Newsletter" />
+            <div class="tab-content" id="nwsl-content">
+              <div class="standings-table-container">
+                <table class="standings-table">
+                  <thead>
+                    <tr>
+                      <th>Pos</th>
+                      <th class="team-column">Team</th>
+                      <th>GP</th>
+                      <th>W</th>
+                      <th>D</th>
+                      <th>L</th>
+                      <th>GF</th>
+                      <th>GA</th>
+                      <th>GD</th>
+                      <th>Pts</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {
+                      nwslStandings.map((team) => (
+                        <tr>
+                          <td>{team.position}</td>
+                          <td class="team-column">{team.team}</td>
+                          <td>{team.played}</td>
+                          <td>{team.won}</td>
+                          <td>{team.drawn}</td>
+                          <td>{team.lost}</td>
+                          <td>{team.gf}</td>
+                          <td>{team.ga}</td>
+                          <td>{team.gd}</td>
+                          <td class="points-column">{team.points}</td>
+                        </tr>
+                      ))
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <style>
+        /* Hero Profile Section */
+        .hero-section {
+          padding: 2rem 0;
+          background-color: var(--bg-body);
+        }
+
+        .container {
+          max-width: 1380px;
+          margin: 0 auto;
+          padding: 0 1.5rem;
+        }
+
+        .news-style-hero {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+
+        .hero-title h2 {
+          color: #e24b32;
+          font-size: 2rem;
+          font-weight: 700;
+          margin: 0;
+        }
+
+        .hero-content {
+          display: grid;
+          grid-template-columns: 3fr 2fr;
+          gap: 1.5rem;
+        }
+
+        /* Base styles for all cards */
+        .hero-main-card,
+        .secondary-card {
+          border-radius: 8px;
+          overflow: hidden;
+          position: relative;
+          color: white;
+          text-decoration: none;
+          display: block;
+          background-size: cover;
+          background-position: center;
+          transition: transform 0.3s ease;
+        }
+
+        .hero-main-card:hover,
+        .secondary-card:hover {
+          transform: translateY(-5px);
+        }
+
+        /* Add dark overlay for better text readability */
+        .hero-main-card::after,
+        .secondary-card::after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 70%;
+          background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.8) 0%,
+            rgba(0, 0, 0, 0) 100%
+          );
+          z-index: 1;
+        }
+
+        /* Main card specific styles */
+        .hero-main-card {
+          height: 500px;
+          /* Replace with your actual image path */
+          background-image: url("/article-1-pic.jpg");
+        }
+
+        /* Secondary cards container */
+        .hero-secondary-cards {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+          height: 500px;
+        }
+
+        /* Secondary card specific styles */
+        .secondary-card {
+          flex: 1;
+          height: calc(50% - 0.75rem);
+        }
+
+        /* First secondary card background */
+        .secondary-card:first-child {
+          background-image: url("/article-2-pic.jpg");
+        }
+
+        /* Second secondary card background */
+        .secondary-card:last-child {
+          background-image: url("/article-3-pic.jpg");
+        }
+
+        /* Category tags */
+        .card-tag {
+          display: inline-block;
+          background-color: #ff0000;
+          color: white;
+          padding: 0.3rem 0.8rem;
+          border-radius: 4px;
+          font-size: 0.9rem;
+          font-weight: 500;
+          position: absolute;
+          top: 1.5rem;
+          left: 1.5rem;
+          z-index: 2;
+        }
+
+        /* Card content positioning */
+        .card-content {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          padding: 1.5rem;
+          z-index: 2;
+          width: 100%;
+        }
+
+        /* Typography for main card */
+        .hero-main-card h2 {
+          font-size: 2.5rem;
+          margin: 0.5rem 0;
+          text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        .hero-main-card p {
+          font-size: 1.2rem;
+          margin-bottom: 0;
+          max-width: 80%;
+          text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Typography for secondary cards */
+        .secondary-card h3 {
+          font-size: 1.8rem;
+          margin: 0.5rem 0;
+          text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        .secondary-card p {
+          font-size: 1rem;
+          margin-bottom: 0;
+          text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+          .hero-content {
+            grid-template-columns: 1fr;
+          }
+
+          .hero-main-card {
+            height: 400px;
+          }
+
+          .hero-secondary-cards {
+            height: auto;
+            flex-direction: row;
+          }
+
+          .secondary-card {
+            height: 250px;
+            flex: 1;
+          }
+
+          .hero-main-card h2 {
+            font-size: 2rem;
+          }
+
+          .hero-main-card p {
+            max-width: 100%;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .hero-secondary-cards {
+            flex-direction: column;
+          }
+
+          .secondary-card {
+            height: 250px;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .hero-title h2 {
+            font-size: 1.5rem;
+          }
+
+          .hero-main-card {
+            height: 300px;
+          }
+
+          .hero-main-card h2 {
+            font-size: 1.8rem;
+          }
+
+          .hero-main-card p {
+            font-size: 1rem;
+          }
+
+          .card-tag {
+            padding: 0.2rem 0.6rem;
+            font-size: 0.8rem;
+            top: 1rem;
+            left: 1rem;
+          }
+
+          .card-content {
+            padding: 1rem;
+          }
+        }
+
+        /* Section Spacing */
+        .projects-section,
+        .videos-section,
+        .newsletter-section {
+          padding: 2rem 0;
+        }
+
+        .videos-section {
+          padding: 3rem 0;
+          background-color: var(--bg-body);
+        }
+
+        .container {
+          max-width: 1380px;
+          margin: 0 auto;
+          padding: 0 1.5rem;
+        }
+
+        .section-title h2 {
+          color: #e24b32; /* Red color for title */
+          font-size: 2.5rem;
+          font-weight: 700;
+          margin-bottom: 2rem;
+          text-transform: uppercase;
+        }
+
+        .videos-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.5rem;
+        }
+
+        .video-card {
+          display: block;
+          text-decoration: none;
+          color: inherit;
+          border-radius: 8px;
+          overflow: hidden;
+          transition: transform 0.3s ease;
+          background-color: transparent;
+          position: relative;
+        }
+
+        .video-card:hover {
+          transform: translateY(-5px);
+        }
+
+        .video-thumbnail {
+          position: relative;
+          width: 100%;
+          height: 0;
+          padding-bottom: 88.25%; /* 16:9 aspect ratio */
+          overflow: hidden;
+        }
+        .video-thumbnail-1 {
+          position: relative;
+          width: 100%;
+          height: 0;
+          padding-bottom: 48.25%; /* 16:9 aspect ratio */
+          overflow: hidden;
+        }
+        .video-thumbnail-2 {
+          position: relative;
+          width: 100%;
+          height: 0;
+          padding-bottom: 31.25%; /* 16:9 aspect ratio */
+          overflow: hidden;
+        }
+        .video-thumbnail-3 {
+          position: relative;
+          width: 100%;
+          height: 0;
+          padding-bottom: 31.25%; /* 16:9 aspect ratio */
+          overflow: hidden;
+        }
+
+        .video-thumbnail img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .category-tag-1 {
+          position: absolute;
+          bottom: 4.5rem;
+          left: 1rem;
+          background-color: #e24b32; /* Red background for category tag */
+          color: white;
+          padding: 0.3rem 0.8rem;
+          border-radius: 4px;
+          font-size: 0.9rem;
+          font-weight: 500;
+          z-index: 2;
+        }
+
+        .category-tag-2 {
+          position: absolute;
+          bottom: 2rem;
+          left: 1rem;
+          background-color: #e24b32; /* Red background for category tag */
+          color: white;
+          padding: 0.3rem 0.8rem;
+          border-radius: 4px;
+          font-size: 0.9rem;
+          font-weight: 500;
+          z-index: 2;
+        }
+
+        .video-info {
+          position: absolute;
+          max-height: 100%;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          padding: 3rem 1rem 1rem 1rem;
+          /* background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.8) 0%,
+            rgba(0, 0, 0, 0) 100%
+          ); */
+          z-index: 1;
+          /* Add these properties to ensure it doesn't extend beyond container */
+          overflow: hidden;
+
+          border-bottom-left-radius: 8px; /* Match your container's border radius */
+          border-bottom-right-radius: 8px; /* Match your container's border radius */
+        }
+
+        .video-info h3 {
+          color: white;
+          font-size: 1.2rem;
+          margin: 0;
+          font-weight: 600;
+          line-height: 1.4;
+          text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+          .videos-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .section-title h2 {
+            font-size: 2rem;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .videos-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .section-title h2 {
+            font-size: 1.8rem;
+          }
+
+          .video-info h3 {
+            font-size: 1.1rem;
+          }
+        }
+
+        /* Project Cards */
+        .avatar-small {
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+        }
+
+        .card-tag {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          background-color: var(--bg-card);
+          border-radius: 50%;
+          width: 32px;
+          height: 32px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+        }
+
+        .project-meta {
+          margin-top: 1rem;
+          display: flex;
+          gap: 1rem;
+        }
+
+        .meta-item {
+          display: flex;
+          align-items: center;
+          gap: 0.35rem;
+          color: var(--text-secondary);
+          font-size: 0.875rem;
+        }
+
+        .content-card {
+          border-radius: 8px;
+          overflow: hidden;
+          background-color: var(--bg-card, #1a1b26);
+          /* Thicker yellow border - increased from 2px to 4px */
+          border: 3px solid #7ccdef; /* Bright yellow border with increased thickness */
+          /* Add some subtle glow effect */
+          transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+        }
+
+        .content-card:hover {
+          transform: translateY(-5px);
+        }
+
+        /* Podcast Banner */
+        .featured-video-banner {
+          padding: 2rem 0 4rem;
+          background-color: #f8f8f8;
+        }
+
+        .container {
+          max-width: 1380px;
+          margin: 0 auto;
+          padding: 0 1.5rem;
+        }
+
+        .section-title h2 {
+          color: #e24b32; /* Red color for title */
+          font-size: 2.5rem;
+          font-weight: 700;
+          margin-bottom: 2rem;
+          text-transform: uppercase;
+        }
+
+        .featured-video-section {
+          padding: 3rem 0;
+          background-color: var(--bg-body);
+        }
+
+        .container {
+          max-width: 1380px;
+          margin: 0 auto;
+          padding: 0 1.5rem;
+        }
+
+        .section-title {
+          color: #e24b32;
+          font-size: 2.2rem;
+          font-weight: 700;
+          margin-bottom: 1.5rem;
+          text-transform: uppercase;
+        }
+
+        .main-video-container {
+          width: 100%;
+          position: relative;
+          padding-bottom: 56.25%; /* 16:9 aspect ratio */
+          height: 0;
+          overflow: hidden;
+          margin-bottom: 0.5rem;
+          background-color: #000;
+        }
+
+        #main-video-player {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+        }
+
+        .main-video-title {
+          color: white;
+          font-size: 1.5rem;
+          font-weight: 600;
+          line-height: 1.3;
+          margin: 1rem 0 2rem;
+        }
+
+        .more-videos {
+          padding: 1rem 0 3rem;
+          background-color: var(--bg-body);
+        }
+
+        .section-header {
+          max-width: 1380px;
+          margin: 0 auto 2rem;
+          padding: 0 1.5rem;
+        }
+
+        .section-header h2 {
+          color: #8bb8e8;
+          font-size: 1.75rem;
+          font-weight: 700;
+        }
+
+        .carousel-container {
+          position: relative;
+          display: flex;
+          align-items: center;
+          max-width: 1380px;
+          margin: 0 auto;
+          padding: 0 2rem;
+        }
+
+        .carousel-button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          background: rgba(255, 255, 255, 0.15);
+          border: none;
+          border-radius: 50%;
+          color: white;
+          font-size: 1.2rem;
+          cursor: pointer;
+          z-index: 10;
+          transition: background 0.2s ease;
+          flex-shrink: 0;
+        }
+
+        .carousel-button:hover {
+          background: rgba(255, 255, 255, 0.3);
+        }
+
+        .video-carousel {
+          width: 100%;
+          overflow: hidden;
+          margin: 0 1rem;
+        }
+
+        .video-items-wrapper {
+          display: flex;
+          width: 100%;
+          gap: 20px;
+          transition: transform 0.5s ease;
+        }
+
+        .video-item {
+          flex: 1;
+          min-width: 0; /* This is important to allow items to shrink below min-content width */
+          cursor: pointer;
+          transition: transform 0.2s ease;
+        }
+
+        .video-item:hover {
+          transform: translateY(-5px);
+        }
+
+        .video-thumbnail {
+          position: relative;
+          border-radius: 8px;
+          overflow: hidden;
+          margin-bottom: 0.8rem;
+          aspect-ratio: 16 / 9;
+        }
+
+        .video-thumbnail img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        /* New overlay with hidden play button that appears on hover */
+        .hover-overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.4);
+          opacity: 0;
+          transition: opacity 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .video-item:hover .hover-overlay {
+          opacity: 1;
+        }
+
+        .play-icon {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 60px;
+          height: 60px;
+          background-color: rgba(226, 75, 50, 0.9);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .play-icon i {
+          color: white;
+          font-size: 1.5rem;
+        }
+
+        .video-title {
+          color: white;
+          font-size: 1rem;
+          line-height: 1.4;
+          font-weight: 500;
+          margin: 0;
+        }
+
+        /* Media Queries */
+        @media (max-width: 1024px) {
+          .video-items-wrapper {
+            justify-content: flex-start;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+            padding-bottom: 1rem; /* For scrollbar space */
+          }
+
+          .video-item {
+            flex: 0 0 calc(33.33% - 15px);
+            scroll-snap-align: start;
+          }
+
+          .main-video-title {
+            font-size: 1.3rem;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .video-item {
+            flex: 0 0 calc(50% - 10px);
+          }
+
+          .main-video-title {
+            font-size: 1.2rem;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .carousel-container {
+            padding: 0 1rem;
+          }
+
+          .video-item {
+            flex: 0 0 calc(80% - 10px);
+          }
+
+          .section-header h2 {
+            font-size: 1.5rem;
+          }
+
+          .main-video-title {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+          }
+        }
+
+        /* Section titles */
+        .section-title {
+          font-size: 1.75rem;
+          font-weight: 800; /* Changed from 700 to 800 to match example */
+          margin-bottom: 2rem;
+          padding-bottom: 0.5rem;
+          border-bottom: 1px solid var(--border-color);
+          color: var(--text-primary);
+        }
+
+        /* Standings Section Styles (new) */
+        .standings-section {
+          padding: 3rem 0;
+          background-color: var(--bg-body);
+          color: white;
+        }
+
+        .standings-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 2rem;
+        }
+
+        .standings-meta {
+          display: flex;
+          align-items: center;
+          gap: 1.5rem;
+        }
+
+        .updated-text {
+          color: #a0a0a0;
+          font-size: 0.9rem;
+        }
+
+        .view-more-btn {
+          display: inline-block;
+          background-color: #e24b32;
+          color: white;
+          padding: 0.6rem 1.2rem;
+          border-radius: 4px;
+          font-weight: 500;
+          text-decoration: none;
+          transition: background-color 0.2s ease;
+        }
+
+        .view-more-btn:hover {
+          background-color: #c13a26;
+        }
+
+        .standings-tabs {
+          display: flex;
+          gap: 1rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .tab-btn {
+          background: none;
+          border: none;
+          color: #a0a0a0;
+          font-size: 1.1rem;
+          font-weight: 600;
+          padding: 0.5rem 1rem;
+          cursor: pointer;
+          border-bottom: 3px solid transparent;
+          transition: all 0.2s ease;
+        }
+
+        .tab-btn.active {
+          color: white;
+          border-bottom-color: #e24b32;
+        }
+
+        .conferences-selector {
+          display: flex;
+          gap: 1rem;
+          margin-bottom: 1rem;
+        }
+
+        .conference-btn {
+          background: none;
+          border: none;
+          color: #a0a0a0;
+          font-size: 1rem;
+          font-weight: 500;
+          padding: 0.4rem 0.8rem;
+          cursor: pointer;
+          border-radius: 4px;
+          transition: all 0.2s ease;
+        }
+
+        .conference-btn.active {
+          color: white;
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .tab-content {
+          display: none;
+        }
+
+        .tab-content.active {
+          display: block;
+        }
+
+        .conference-content {
+          display: none;
+        }
+
+        .conference-content.active {
+          display: block;
+        }
+
+        .standings-table-container {
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          margin-bottom: 2rem;
+        }
+
+        .standings-table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 0.95rem;
+          min-width: 650px; /* Ensures tables don't get too compressed */
+        }
+
+        .standings-table th {
+          background-color: rgba(255, 255, 255, 0.1);
+          padding: 0.75rem 0.5rem;
+          text-align: center;
+          font-weight: 600;
+          position: sticky;
+          top: 0;
+        }
+
+        .standings-table td {
+          padding: 0.75rem 0.5rem;
+          text-align: center;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .team-column {
+          text-align: left !important;
+          min-width: 180px;
+        }
+
+        .points-column {
+          font-weight: 700;
+        }
+
+        .standings-table tr:nth-child(even) {
+          background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .standings-table tr:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive tweaks for standings section */
+        @media (max-width: 992px) {
+          .section-title {
+            font-size: 1.8rem;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .standings-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+          }
+
+          .standings-meta {
+            width: 100%;
+            justify-content: space-between;
+          }
+
+          .section-title {
+            font-size: 1.6rem;
+          }
+
+          .standings-table {
+            font-size: 0.9rem;
+          }
+
+          .team-column {
+            min-width: 160px;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .section-title {
+            font-size: 1.5rem;
+          }
+
+          .standings-tabs {
+            width: 100%;
+            justify-content: space-between;
+          }
+
+          .tab-btn {
+            flex: 1;
+            text-align: center;
+            font-size: 1rem;
+            padding: 0.5rem 0.5rem;
+          }
+
+          .conferences-selector {
+            width: 100%;
+            justify-content: space-between;
+          }
+
+          .conference-btn {
+            flex: 1;
+            text-align: center;
+            font-size: 0.9rem;
+            padding: 0.4rem 0.4rem;
+          }
+
+          .standings-table {
+            font-size: 0.8rem;
+          }
+
+          .team-column {
+            min-width: 140px;
+          }
+
+          .updated-text {
+            font-size: 0.8rem;
+          }
+
+          .view-more-btn {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+          }
+        }
+
+        /* Responsive */
+        @media (max-width: 960px) {
+          .profile-wrapper {
+            flex-direction: column;
+            text-align: center;
+          }
+
+          .banner-wrapper,
+          .newsletter-wrapper {
+            flex-direction: column;
+            text-align: center;
+          }
+
+          .banner-content p,
+          .newsletter-content p {
+            margin-left: auto;
+            margin-right: auto;
+          }
+
+          .hero-profile {
+            padding: 4rem 0 3rem;
+          }
+
+          .profile-content h1,
+          .name {
+            font-size: 2.5rem; /* Adjusted to keep h1 and name consistent */
+          }
+
+          .bio,
+          .work-info {
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 0; /* Remove padding on mobile for centered alignment */
+          }
+
+          .welcome-text {
+            padding-left: 0; /* Remove padding on mobile for centered alignment */
+          }
+        }
+
+        @media (max-width: 768px) {
+          .section-title {
+            font-size: 1.5rem;
+          }
+        }
+
+        /* Project Section Styles */
+        .projects-section {
+          padding: 4rem 0;
+        }
+
+        .projects-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.5rem;
+        }
+
+        .project-card {
+          border-radius: 8px;
+          overflow: hidden;
+          background-color: #1a2236; /* Dark background, adjust to match video cards */
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+          transition: all 0.3s ease;
+          border: 1px solid #2d3748; /* Subtle border */
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+        }
+
+        .project-card:hover {
+          transform: translateY(-5px);
+          box-shadow: var(--card-shadow);
+        }
+
+        .project-thumbnail {
+          position: relative;
+          height: 240px;
+          padding: 1.5rem;
+          color: white;
+          overflow: hidden;
+        }
+
+        .project-tag {
+          display: inline-block;
+          background-color: #84cc16;
+          padding: 0.25rem 0.5rem;
+          border-radius: 4px;
+          font-weight: 600;
+          font-size: 0.875rem;
+          margin-bottom: 0.5rem;
+        }
+
+        .project-title {
+          font-size: 2rem;
+          font-weight: 800;
+          line-height: 1.1;
+        }
+
+        .project-subtitle {
+          font-size: 1.25rem;
+          margin-top: 0.25rem;
+        }
+
+        .tag {
+          display: inline-block;
+          background-color: #18181b;
+          padding: 0.25rem 0.5rem;
+          border-radius: 4px;
+          font-weight: 600;
+          font-size: 0.875rem;
+        }
+
+        .project-number {
+          position: absolute;
+          bottom: 1.5rem;
+          left: 1.5rem;
+          background-color: white;
+          color: #18181b;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          font-size: 1.125rem;
+        }
+
+        .project-label {
+          position: absolute;
+          bottom: 1.5rem;
+          left: 6rem;
+          font-size: 0.875rem;
+          opacity: 0.9;
+        }
+
+        .project-badge {
+          display: inline-block;
+          background-color: rgba(255, 255, 255, 0.2);
+          padding: 0.35rem 0.75rem;
+          border-radius: 50px;
+          font-size: 0.875rem;
+          margin-top: 2rem;
+        }
+
+        .project-image {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          width: 50%;
+          max-height: 70%;
+          object-fit: contain;
+        }
+
+        .tic-tac-image {
+          width: 40%;
+        }
+
+        .avatar-tag {
+          position: absolute;
+          top: 1rem;
+          right: 1rem;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          overflow: hidden;
+          border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .avatar {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .project-content {
+          padding: 1.5rem;
+        }
+
+        .project-content h3 {
+          font-size: 1.25rem;
+          margin-bottom: 0.75rem;
+          font-weight: 600;
+        }
+
+        .project-content p {
+          color: var(--text-secondary);
+          margin-bottom: 1.25rem;
+          font-size: 0.95rem;
+        }
+
+        .project-links {
+          display: flex;
+          gap: 1rem;
+        }
+
+        .project-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.35rem;
+          color: #ffff;
+          font-size: 0.875rem;
+          transition: color 0.2s;
+        }
+
+        .project-link i {
+          color: #ff0000;
+        }
+
+        .project-link:hover {
+          color: var(--text-primary);
+        }
+
+        .view-more {
+          margin-top: 2rem;
+          text-align: center;
+          color: #ff0000;
+        }
+        .view-more a {
+          font-size: 1.5rem;
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: #ff0000;
+          font-weight: 500;
+          transition: gap 0.2s;
+        }
+        .view-more-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          color: #ff0000;
+          text-decoration: none;
+          font-weight: 500;
+          transition: gap 0.2s;
+        }
+
+        .view-more-link:hover {
+          gap: 0.75rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+          .projects-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .projects-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .profile-content h1,
+          .name {
+            font-size: 2rem; /* Further reduced for small screens */
+          }
+
+          .welcome-text {
+            font-size: 1.125rem;
+          }
+
+          .bio,
+          .work-info {
+            font-size: 1rem;
+          }
+        }
+
+        @media (max-width: 960px) {
+          .banner-wrapper {
+            flex-direction: column;
+            text-align: center;
+          }
+
+          .banner-content p {
+            margin-left: auto;
+            margin-right: auto;
+          }
+
+          .banner-content h2 {
+            font-size: 2rem;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .podcast-banner {
+            padding: 3rem 0;
+          }
+
+          .banner-logo {
+            width: 120px;
+            height: 120px;
+          }
+        }
+      </style>
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          // Video carousel functionality
+          const carousel = document.querySelector(
+            ".video-items-wrapper"
+          ) as HTMLElement;
+          const prevButton = document.querySelector(
+            ".carousel-button.prev"
+          ) as HTMLButtonElement;
+          const nextButton = document.querySelector(
+            ".carousel-button.next"
+          ) as HTMLButtonElement;
+          const videoItems = document.querySelectorAll(".video-item");
+          const mainVideoFrame = document.getElementById(
+            "mainVideoFrame"
+          ) as HTMLIFrameElement;
+          const mainVideoTitle = document.getElementById(
+            "mainVideoTitle"
+          ) as HTMLHeadingElement;
+
+          if (
+            !carousel ||
+            !prevButton ||
+            !nextButton ||
+            videoItems.length === 0 ||
+            !mainVideoFrame ||
+            !mainVideoTitle
+          )
+            return;
+
+          let currentIndex = 0;
+          const getItemsPerView = () => {
+            return window.innerWidth > 1024
+              ? 5
+              : window.innerWidth > 768
+                ? 3
+                : window.innerWidth > 576
+                  ? 2
+                  : 1;
+          };
+
+          let itemsPerView = getItemsPerView();
+
+          // Initialize visibility
+          updateVisibility();
+
+          // Carousel navigation
+          prevButton.addEventListener("click", () => {
+            if (currentIndex > 0) {
+              currentIndex--;
+              scrollToCurrentIndex();
+            }
+          });
+
+          nextButton.addEventListener("click", () => {
+            if (currentIndex < videoItems.length - itemsPerView) {
+              currentIndex++;
+              scrollToCurrentIndex();
+            }
+          });
+
+          // Add click event for video items to play in main player
+          videoItems.forEach((item) => {
+            item.addEventListener("click", () => {
+              const videoId = item.getAttribute("data-video-id");
+              const videoTitle = item.getAttribute("data-video-title");
+
+              if (videoId && videoTitle) {
+                // Update iframe src with autoplay parameter
+                mainVideoFrame.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+
+                // Update video title
+                mainVideoTitle.textContent = videoTitle;
+
+                // Scroll to main video (optional)
+                document
+                  .querySelector(".main-video-container")
+                  ?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
+              }
+            });
+          });
+
+          function scrollToCurrentIndex() {
+            const itemWidth = (videoItems[0] as HTMLElement).offsetWidth + 20; // width + gap
+            carousel.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+            updateVisibility();
+          }
+
+          function updateVisibility() {
+            // Update button states
+            prevButton.disabled = currentIndex === 0;
+            nextButton.disabled =
+              currentIndex >= videoItems.length - itemsPerView;
+
+            // Optional: Update button appearance
+            prevButton.style.opacity = prevButton.disabled ? "0.5" : "1";
+            nextButton.style.opacity = nextButton.disabled ? "0.5" : "1";
+          }
+
+          // Handle window resize
+          window.addEventListener("resize", () => {
+            // Recalculate items per view
+            const newItemsPerView = getItemsPerView();
+
+            if (newItemsPerView !== itemsPerView) {
+              itemsPerView = newItemsPerView;
+
+              // Reset position if needed
+              if (currentIndex > videoItems.length - itemsPerView) {
+                currentIndex = Math.max(0, videoItems.length - itemsPerView);
+                scrollToCurrentIndex();
+              } else {
+                updateVisibility();
+              }
+            }
+          });
+
+          // Standings tabs functionality
+          const tabButtons = document.querySelectorAll(".tab-btn");
+          const tabContents = document.querySelectorAll(".tab-content");
+
+          tabButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+              // Remove active class from all buttons and contents
+              tabButtons.forEach((btn) => btn.classList.remove("active"));
+              tabContents.forEach((content) =>
+                content.classList.remove("active")
+              );
+
+              // Add active class to clicked button and corresponding content
+              button.classList.add("active");
+              const tabId = button.getAttribute("data-tab");
+              const tabContent = document.getElementById(`${tabId}-content`);
+              if (tabContent) tabContent.classList.add("active");
+            });
+          });
+
+          // Conference switching (MLS only)
+          const conferenceButtons =
+            document.querySelectorAll(".conference-btn");
+          const conferenceContents = document.querySelectorAll(
+            ".conference-content"
+          );
+
+          conferenceButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+              // Remove active class from all buttons and contents
+              conferenceButtons.forEach((btn) =>
+                btn.classList.remove("active")
+              );
+              conferenceContents.forEach((content) =>
+                content.classList.remove("active")
+              );
+
+              // Add active class to clicked button and corresponding content
+              button.classList.add("active");
+              const conferenceId = button.getAttribute("data-conference");
+              const conferenceContent = document.getElementById(
+                `${conferenceId}-content`
+              );
+              if (conferenceContent) conferenceContent.classList.add("active");
+            });
+          });
+        });
+      </script>
+    </div>
   </section>
-
-  <style>
-    /* Hero Profile Section */
-    .hero-profile {
-      padding: 5rem 0 4rem; /* Adjusted from 6rem to match example spacing */
-      position: relative;
-      background: radial-gradient(
-        circle at center,
-        rgba(255, 255 255 0.1) 0%,
-        rgba(0, 0, 0, 0) 70%
-      );
-    }
-
-    .profile-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 2.5rem;
-    }
-
-    .profile-image {
-      flex-shrink: 0;
-      transition: transform 0.6s ease-in-out;
-      position: relative; /* Add this to create a positioning context */
-      width: 140px; /* Set the overall container dimensions */
-      height: 140px;
-      margin-left: 20px; /* If you want to move the entire component */
-      margin-top: -5rem;
-    }
-
-    /* This targets the border - create it as a pseudo-element instead of on the img */
-    .profile-image::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      border: 6px solid #fcec52; /* Golden border */
-      box-sizing: border-box;
-      z-index: 1; /* Place above the image */
-      pointer-events: none; /* Makes sure hover still works on the image beneath */
-      box-shadow:
-        inset 0 0 6px rgba(0, 0, 0, 0.3),
-        /* Inner shadow */ 0 2px 5px rgba(0, 0, 0, 0.2); /* Outer subtle shadow */
-    }
-
-    .profile-image img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      padding-left: 0; /* Remove padding as it's not needed */
-      transition: transform 0.6s ease-in-out; /* Move the transition here */
-      position: relative;
-      z-index: 0; /* Place below the border */
-      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
-    }
-
-    .profile-image:hover img {
-      transform: rotate(360deg); /* Only rotate the img on hover */
-    }
-
-    /* Add this media query to remove the negative margin on smaller screens */
-    @media (max-width: 960px) {
-      .profile-image {
-        margin-top: 0; /* Remove negative margin on smaller screens */
-      }
-
-      /* Also adjust other hero section spacing if needed */
-      .hero-profile {
-        padding: 3rem 0 2rem; /* Reduce overall padding */
-      }
-
-      /* You might also want to adjust the profile wrapper */
-      .profile-wrapper {
-        gap: 1.5rem; /* Reduce gap between image and content */
-      }
-    }
-
-    /* For very small screens, you might want to make the image smaller too */
-    @media (max-width: 640px) {
-      .profile-image {
-        width: 120px;
-        height: 120px;
-      }
-    }
-
-    .profile-content {
-      padding-right: 1.5rem; /* Adjust this value to control how far right the text moves */
-    }
-
-    .profile-content h1 {
-      font-size: 3rem; /* Increased from 2.5rem to match example */
-      margin-bottom: 0.5rem;
-      line-height: 1.1; /* Added to improve text spacing */
-    }
-
-    .hand-emoji {
-      display: inline-block;
-      /* Removed animation */
-    }
-
-    .name {
-      color: #fcec52;
-      font-size: 3rem; /* Explicitly set font size to match h1 */
-    }
-
-    .welcome-text {
-      font-size: 1.5rem; /* Increased from 1.125rem */
-      margin-bottom: 0.5rem; /* Increased from 0.75rem */
-      padding-left: 60px;
-    }
-
-    .welcome-text span {
-      color: #ff0000;
-    }
-
-    .welcome-text a:hover {
-      text-decoration: underline;
-    }
-
-    .bio {
-      font-size: 1.5rem; /* Added explicit font size */
-      line-height: 1.5; /* Added line height */
-      margin-bottom: 1rem; /* Increased from 0.75rem */
-      max-width: 640px; /* Increased from 600px */
-      padding-left: 60px;
-    }
-
-    .work-info {
-      font-size: 1.125rem; /* Added explicit font size */
-      line-height: 1.5; /* Added line height */
-      color: var(--text-secondary);
-      max-width: 640px; /* Added max width to match bio */
-    }
-
-    /* Section Spacing */
-    .projects-section,
-    .videos-section,
-    .newsletter-section {
-      padding: 2rem 0;
-    }
-
-    /* Update the section title for Recent Videos to match Recent Projects */
-    .videos-section .section-title,
-    h2.recent-videos-title {
-      font-size: 2.5rem; /* Make heading larger to match Recent Projects */
-      color: var(--text-primary);
-    }
-
-    /* Add more horizontal space between video cards */
-    .videos-section .grid-3 {
-      gap: 1.5rem; /* Increase gap between cards (default was 16px/var(--grid-gap)) */
-    }
-
-    /* Make the video cards wider by adjusting container width */
-    .videos-section .container {
-      max-width: 1300px; /* Increase from default 1200px */
-      width: 95%; /* Use percentage width for better responsiveness */
-      margin: 0 auto;
-    }
-
-    /* Add more space around each video card */
-    .videos-section .content-card {
-      margin-bottom: 0.5rem; /* Add slight bottom margin */
-      border: 3px solid #7ccdef; /* Add subtle border like in the project cards */
-    }
-
-    /* Add more padding in the card body */
-    .videos-section .card-body {
-      padding: 1.5rem; /* Increase from default 1.25rem */
-    }
-
-    /* Make card titles slightly larger */
-    .videos-section .card-body h3 {
-      font-size: 1.25rem; /* Increase from default 1.125rem */
-      margin-bottom: 1rem; /* Add more space below the title */
-    }
-
-    /* Ensure the video thumbnail maintains proper ratio */
-    .videos-section .card-thumbnail img {
-      aspect-ratio: 16 / 9;
-    }
-
-    /* Ensure consistent spacing for the section */
-    .videos-section {
-      padding: 5rem 0; /* Increase overall section padding */
-    }
-
-    /* Further responsive adjustments */
-    @media (max-width: 1200px) {
-      .videos-section .container {
-        max-width: 95%; /* Use percentage width on smaller screens */
-      }
-    }
-
-    @media (max-width: 768px) {
-      .videos-section .section-title,
-      h2.recent-videos-title {
-        font-size: 2.2rem; /* Slightly smaller on mobile but still prominent */
-      }
-
-      .videos-section {
-        padding: 3rem 0; /* Less padding on mobile */
-      }
-    }
-
-    /* Project Cards */
-    .avatar-small {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-    }
-
-    .card-tag {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background-color: var(--bg-card);
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .project-meta {
-      margin-top: 1rem;
-      display: flex;
-      gap: 1rem;
-    }
-
-    .meta-item {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      color: var(--text-secondary);
-      font-size: 0.875rem;
-    }
-
-    .content-card {
-      border-radius: 8px;
-      overflow: hidden;
-      background-color: var(--bg-card, #1a1b26);
-      /* Thicker yellow border - increased from 2px to 4px */
-      border: 3px solid #7ccdef; /* Bright yellow border with increased thickness */
-      /* Add some subtle glow effect */
-      transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
-    }
-
-    .content-card:hover {
-      transform: translateY(-5px);
-    }
-
-    /* Podcast Banner */
-    .podcast-banner {
-      background-color: var(--bg-card);
-      padding: 4rem 0;
-      overflow: hidden;
-      background-image: url("/spotify-img.jpg");
-      /* Change these background properties */
-      background-size: cover; /* Covers the entire element */
-      background-position: 75% center; /* Centers the image */
-      background-repeat: no-repeat; /* Prevents repeating */
-      position: relative;
-    }
-
-    .podcast-banner::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(
-        0,
-        0,
-        0,
-        0.4
-      ); /* Adjust opacity here (0.4 = 60% transparent) */
-      z-index: 1;
-    }
-
-    .podcast-banner-content {
-      position: relative;
-      z-index: 2;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 2rem;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start; /* Align to the left side of the container */
-      margin-left: auto; /* This pushes content to the right */
-      margin-right: 5%; /* Space from the right edge */
-      width: 65%; /* Adjust width as needed */
-    }
-
-    /* Banner borders */
-    .banner-border {
-      position: absolute;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.1) 50%,
-        rgba(255, 255, 255, 0) 100%
-      );
-      z-index: 10;
-    }
-
-    .banner-border.top {
-      top: 0;
-    }
-
-    .banner-border.bottom {
-      bottom: 0;
-    }
-
-    .banner-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 3rem;
-      position: relative;
-      z-index: 10;
-    }
-
-    .banner-logo {
-      flex-shrink: 0;
-      position: relative;
-      width: 140px;
-      height: 140px;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-      transition: transform 0.3s ease;
-    }
-
-    .banner-logo:hover {
-      transform: scale(1.05);
-    }
-
-    .banner-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .banner-content {
-      flex: 1;
-    }
-
-    .banner-badge {
-      display: inline-block;
-      background-color: rgba(255, 255, 255, 0.1);
-      color: #fff;
-      font-size: 0.875rem;
-      padding: 0.25rem 1rem;
-      border-radius: 50px;
-      margin-bottom: 1rem;
-    }
-
-    .banner-content h2 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      margin-bottom: 1rem;
-      color: white;
-    }
-
-    .banner-content p {
-      margin-bottom: 1.5rem;
-      max-width: 600px;
-      color: rgba(255, 255, 255, 0.9);
-      font-size: 1.125rem;
-      line-height: 1.6;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-weight: 600;
-      padding: 0.75rem 1.5rem;
-      border-radius: 50px;
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-
-    .btn-secondary {
-      background-color: #ff0000; /* Red color for the podcast */
-      color: white;
-    }
-
-    .btn-secondary:hover {
-      background-color: #ff0000;
-      transform: scale(1.05);
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 960px) {
-      .banner-wrapper {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .banner-content p {
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .banner-content h2 {
-        font-size: 2rem;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .course-banner {
-        padding: 3rem 0;
-      }
-
-      .banner-logo {
-        width: 120px;
-        height: 120px;
-      }
-    }
-
-    /* Twitter card specific styles */
-    .tweet-thumbnail {
-      position: relative;
-      background-color: #15202b; /* Twitter dark mode background */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 200px; /* Maintain same height as video thumbnails */
-    }
-
-    .tweet-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        135deg,
-        #1da1f2,
-        #14171a
-      ); /* Twitter blue gradient */
-      opacity: 0.2; /* Subtle gradient */
-    }
-
-    .twitter-icon i {
-      color: #1da1f2; /* Twitter blue */
-    }
-
-    /* Style for tweet text */
-    .tweet-text {
-      font-size: 0.9rem;
-      line-height: 1.4;
-      margin: 8px 0 12px;
-      color: #8b98a5;
-    }
-
-    /* Hashtags and mentions */
-    .hashtag,
-    .mention {
-      color: #1da1f2;
-      font-weight: 500;
-    }
-
-    /* Adjust card meta for tweets */
-    .content-card .card-meta {
-      display: flex;
-      gap: 15px;
-    }
-
-    /* Hover effect */
-    .content-card:hover .twitter-icon i {
-      transform: scale(1.1);
-    }
-
-    /* If your cards don't already have transition */
-    .content-card,
-    .icon-play i {
-      transition: all 0.3s ease;
-    }
-    /* Newsletter Section */
-    .newsletter-section {
-      padding: 4rem 0;
-      overflow: hidden;
-      background-image: url("/newsletter.jpg");
-      /* Change these background properties */
-      background-size: cover; /* Covers the entire element */
-      background-position: 75% center; /* Centers the image */
-      background-repeat: no-repeat; /* Prevents repeating */
-      position: relative;
-    }
-
-    .newsletter-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 3rem;
-    }
-
-    .newsletter-content {
-      flex: 1;
-    }
-
-    .newsletter-image {
-      flex: 1;
-      display: none;
-    }
-
-    .newsletter-image img {
-      border-radius: 12px;
-      width: 100%;
-    }
-
-    .newsletter-badge {
-      display: inline-block;
-      padding: 0.25rem 0.75rem;
-      background-color: rgba(255, 255, 255, 0.1);
-      border-radius: 50px;
-      font-size: 0.875rem;
-      margin-bottom: 1rem;
-    }
-
-    .newsletter-content h2 {
-      font-size: 2.25rem;
-      margin-bottom: 1rem;
-      font-weight: 800; /* Added explicit font weight */
-    }
-
-    .newsletter-content p {
-      margin-bottom: 0.5rem;
-      max-width: 540px;
-      color: #fff;
-      font-size: 1.125rem; /* Added font size */
-    }
-
-    .unsubscribe-note {
-      font-size: 0.875rem;
-      margin-bottom: 1.5rem;
-    }
-
-    /* Section titles */
-    .section-title {
-      font-size: 1.75rem;
-      font-weight: 800; /* Changed from 700 to 800 to match example */
-      margin-bottom: 2rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--border-color);
-      color: var(--text-primary);
-    }
-
-    /* Twitter embed card styling */
-    .twitter-embed-card {
-      height: 590px !important; /* Fixed height for consistent sizing */
-      padding: 0 !important; /* Remove any padding */
-      overflow: hidden !important; /* Hide overflow */
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      background-color: var(
-        --bg-card
-      ) !important; /* Your site's card background */
-      border: 2px solid #7ccdef !important; /* Sky blue border */
-      border-radius: 12px !important; /* Rounded corners */
-      box-shadow: var(--card-shadow) !important; /* Your site's card shadow */
-      transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease !important;
-    }
-
-    .twitter-embed-card-2 {
-      height: 500px !important; /* Fixed height for consistent sizing */
-      padding: 0 !important; /* Remove any padding */
-      overflow: hidden !important; /* Hide overflow */
-      display: flex !important;
-
-      align-items: center !important;
-      justify-content: center !important;
-      background-color: var(
-        --bg-card
-      ) !important; /* Your site's card background */
-      border: 2px solid #7ccdef !important; /* Sky blue border */
-      border-radius: 12px !important; /* Rounded corners */
-      box-shadow: var(--card-shadow) !important; /* Your site's card shadow */
-      transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease !important;
-    }
-
-    /* Fix Twitter iframe sizing */
-    .twitter-embed-card iframe {
-      width: 100% !important;
-      height: 100% !important;
-      min-height: 590px !important; /* Almost full height of container */
-      max-width: 550px !important; /* Maximum width */
-      margin: 0 auto !important; /* Center the iframe */
-    }
-
-    /* Twitter blockquote styling */
-    .twitter-embed-card .twitter-tweet {
-      margin: 0 !important;
-      width: 100% !important;
-      height: 100% !important;
-      max-width: none !important;
-    }
-
-    /* Hover effect matching your design */
-    .twitter-embed-card:hover {
-      transform: translateY(-5px) !important;
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3) !important;
-      border-color: #7ccdef !important; /* Brighter border on hover */
-    }
-
-    /* Add Twitter specific grid spacing */
-    .videos-section .grid-3 {
-      gap: 2rem !important; /* More consistent gap */
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 1200px) {
-      .twitter-embed-card {
-        height: 580px !important;
-      }
-
-      .twitter-embed-card iframe {
-        min-height: 570px !important;
-      }
-    }
-
-    @media (max-width: 992px) {
-      .twitter-embed-card {
-        height: 560px !important;
-      }
-
-      .twitter-embed-card iframe {
-        min-height: 550px !important;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .twitter-embed-card {
-        height: 520px !important;
-      }
-
-      .twitter-embed-card iframe {
-        min-height: 510px !important;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .twitter-embed-card {
-        height: 480px !important;
-      }
-
-      .twitter-embed-card iframe {
-        min-height: 470px !important;
-      }
-    }
-
-    /* Responsive */
-    @media (max-width: 960px) {
-      .profile-wrapper {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .banner-wrapper,
-      .newsletter-wrapper {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .banner-content p,
-      .newsletter-content p {
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .hero-profile {
-        padding: 4rem 0 3rem;
-      }
-
-      .profile-content h1,
-      .name {
-        font-size: 2.5rem; /* Adjusted to keep h1 and name consistent */
-      }
-
-      .bio,
-      .work-info {
-        margin-left: auto;
-        margin-right: auto;
-        padding-left: 0; /* Remove padding on mobile for centered alignment */
-      }
-
-      .welcome-text {
-        padding-left: 0; /* Remove padding on mobile for centered alignment */
-      }
-    }
-
-    @media (max-width: 768px) {
-      .section-title {
-        font-size: 1.5rem;
-      }
-    }
-
-    /* Project Section Styles */
-    .projects-section {
-      padding: 4rem 0;
-    }
-
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
-
-    .project-card {
-      border-radius: 8px;
-      overflow: hidden;
-      background-color: #1a2236; /* Dark background, adjust to match video cards */
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      transition: all 0.3s ease;
-      border: 1px solid #2d3748; /* Subtle border */
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .project-card:hover {
-      transform: translateY(-5px);
-      box-shadow: var(--card-shadow);
-    }
-
-    .project-thumbnail {
-      position: relative;
-      height: 240px;
-      padding: 1.5rem;
-      color: white;
-      overflow: hidden;
-    }
-
-    .project-tag {
-      display: inline-block;
-      background-color: #84cc16;
-      padding: 0.25rem 0.5rem;
-      border-radius: 4px;
-      font-weight: 600;
-      font-size: 0.875rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .project-title {
-      font-size: 2rem;
-      font-weight: 800;
-      line-height: 1.1;
-    }
-
-    .project-subtitle {
-      font-size: 1.25rem;
-      margin-top: 0.25rem;
-    }
-
-    .tag {
-      display: inline-block;
-      background-color: #18181b;
-      padding: 0.25rem 0.5rem;
-      border-radius: 4px;
-      font-weight: 600;
-      font-size: 0.875rem;
-    }
-
-    .project-number {
-      position: absolute;
-      bottom: 1.5rem;
-      left: 1.5rem;
-      background-color: white;
-      color: #18181b;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 1.125rem;
-    }
-
-    .project-label {
-      position: absolute;
-      bottom: 1.5rem;
-      left: 6rem;
-      font-size: 0.875rem;
-      opacity: 0.9;
-    }
-
-    .project-badge {
-      display: inline-block;
-      background-color: rgba(255, 255, 255, 0.2);
-      padding: 0.35rem 0.75rem;
-      border-radius: 50px;
-      font-size: 0.875rem;
-      margin-top: 2rem;
-    }
-
-    .project-image {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      width: 50%;
-      max-height: 70%;
-      object-fit: contain;
-    }
-
-    .tic-tac-image {
-      width: 40%;
-    }
-
-    .avatar-tag {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      overflow: hidden;
-      border: 2px solid rgba(255, 255, 255, 0.5);
-    }
-
-    .avatar {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .project-content {
-      padding: 1.5rem;
-    }
-
-    .project-content h3 {
-      font-size: 1.25rem;
-      margin-bottom: 0.75rem;
-      font-weight: 600;
-    }
-
-    .project-content p {
-      color: var(--text-secondary);
-      margin-bottom: 1.25rem;
-      font-size: 0.95rem;
-    }
-
-    .project-links {
-      display: flex;
-      gap: 1rem;
-    }
-
-    .project-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      color: #ffff;
-      font-size: 0.875rem;
-      transition: color 0.2s;
-    }
-
-    .project-link i {
-      color: #ff0000;
-    }
-
-    .project-link:hover {
-      color: var(--text-primary);
-    }
-
-    .view-more {
-      margin-top: 2rem;
-      text-align: center;
-      color: #ff0000;
-    }
-
-    .view-more-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: #ff0000;
-      text-decoration: none;
-      font-weight: 500;
-      transition: gap 0.2s;
-    }
-
-    .view-more-link:hover {
-      gap: 0.75rem;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 1024px) {
-      .projects-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 768px) {
-      .projects-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .profile-content h1,
-      .name {
-        font-size: 2rem; /* Further reduced for small screens */
-      }
-
-      .welcome-text {
-        font-size: 1.125rem;
-      }
-
-      .bio,
-      .work-info {
-        font-size: 1rem;
-      }
-    }
-
-    @media (max-width: 960px) {
-      .banner-wrapper {
-        flex-direction: column;
-        text-align: center;
-      }
-
-      .banner-content p {
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .banner-content h2 {
-        font-size: 2rem;
-      }
-    }
-
-    @media (max-width: 640px) {
-      .podcast-banner {
-        padding: 3rem 0;
-      }
-
-      .banner-logo {
-        width: 120px;
-        height: 120px;
-      }
-    }
-  </style>
 </Layout>

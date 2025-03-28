@@ -35,8 +35,8 @@ const { title, description } = Astro.props;
       rel="stylesheet"
     />
 
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"
-    ></script>
+    <!-- <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"
+    ></script> -->
   </head>
   <body>
     <!-- Header -->
@@ -96,7 +96,7 @@ const { title, description } = Astro.props;
     <Footer />
 
     <!-- Side Social Links -->
-    <div class="side-socials">
+    <!-- <div class="side-socials">
       <a href="https://x.com/hernanespn?lang=ca" title="Twitter"
         ><i class="fa-brands fa-twitter"></i></a
       >
@@ -111,7 +111,7 @@ const { title, description } = Astro.props;
         href="https://www.instagram.com/lafieradeportiva/?hl=en"
         title="Instagram"><i class="fa-brands fa-instagram"></i></a
       >
-    </div>
+    </div> -->
   </body>
 </html>
 
@@ -360,47 +360,129 @@ const { title, description } = Astro.props;
     }
   }
 
-  /* Footer */
-  footer {
-    border-top: 1px solid var(--border-color);
-    padding: 1.5rem 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  /* Footer - Updated Styles */
+  footer.site-footer {
+    background-color: #1c2b5a; /* Dark navy blue */
+    padding: 3rem 0;
+    border-top: none;
+    display: block; /* Override the flex display */
   }
 
-  .footer-socials {
-    display: flex;
-    gap: 1rem;
+  .footer-container {
+    max-width: 1380px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.5fr 1.5fr;
+    gap: 2rem;
   }
 
-  .footer-socials a,
-  .side-socials a {
-    color: var(--text-secondary);
-    transition: color 0.2s;
+  .footer-column h3 {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.5px;
   }
 
-  .footer-socials a:hover,
-  .side-socials a:hover {
-    color: var(--text-primary);
+  .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
   }
 
-  .footer-copyright {
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    letter-spacing: 1px;
+  .footer-links li {
+    margin-bottom: 0.75rem;
   }
 
-  /* Side Socials */
-  .side-socials {
-    position: fixed;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
+  .footer-links a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.2s ease;
+    display: inline-block;
+  }
+
+  .footer-links a:hover {
+    color: white;
+  }
+
+  .footer-logo {
+    max-width: 180px;
+    height: auto;
+  }
+
+  .newsletter-form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    z-index: 90;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .newsletter-form input {
+    padding: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    width: 100%;
+    background-color: transparent;
+    color: white;
+  }
+
+  .newsletter-form input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .newsletter-form button {
+    padding: 0.6rem 1.2rem;
+    background-color: white;
+    color: #1c2b5a;
+    border: none;
+    border-radius: 0.25rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    width: fit-content;
+  }
+
+  .newsletter-form button:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+
+  .app-mockup img {
+    max-width: 220px;
+    height: auto;
+    margin-top: 1.5rem;
+  }
+
+  /* Override the existing footer socials and copyright styles */
+  .footer-socials,
+  .footer-copyright {
+    display: none;
+  }
+
+  /* Media Queries */
+  @media (max-width: 1024px) {
+    .footer-container {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem 2rem;
+    }
+
+    .app-mockup {
+      display: none; /* Hide mockup on smaller screens */
+    }
+  }
+
+  @media (max-width: 640px) {
+    .footer-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    footer.site-footer {
+      padding: 2rem 0;
+    }
   }
 
   /* Main Content */

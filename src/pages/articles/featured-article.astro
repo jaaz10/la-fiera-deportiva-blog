@@ -1,0 +1,277 @@
+---
+// featured-articles.astro
+import Layout from "../../layouts/Layout.astro";
+
+// You can fetch or import article data here
+const articleData = {
+  category: "España",
+  title:
+    "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.",
+  excerpt: "I'm baby single-origin coffee kale chips polaroid",
+  date: "Marzo 28, 2025",
+  image: "/article-1-pic.jpg",
+  content: [
+    "I'm baby adaptogen single-origin coffee hexagon snackwave forage everyday carry, tacos photo booth meggings mustache mixtape fashion axe art party tote bag etsy. Air plant tote bag butcher sartorial bruh ascot. Flannel tousled beard praxis readymade, narwhal mlkshk shaman schlitz. Farm-to-table health goth la croix hot chicken. XOXO edison bulb thundercats grailed gluten-free, hexagon dreamcatcher. Bicycle rights literally man bun mustache neutral milk hotel salvia put a bird on it.",
+    "Lomo Brooklyn enamel pin master cleanse four dollar toast praxis hexagon. Shabby chic master cleanse schlitz, occupy banh mi franzen food truck pinterest kitsch seitan banjo hexagon. Waistcoat copper mug mukbang listicle try-hard fingerstache gatekeep DIY letterpress neutra big mood yr twee pug kickstarter. Twee crucifix shabby chic quinoa praxis edison bulb. Solarpunk four loko raclette small batch forage celiac. Selfies mumblecore keffiyeh chia tofu, flexitarian normcore af XOXO banjo semiotics marfa Brooklyn yes plz.",
+    "Ugh la croix actually church-key microdosing af retro knausgaard raw denim literally adaptogen pitchfork plaid palo santo. Neutra messenger bag shaman bespoke yes plz tattooed authentic. Blackbird spyplane jawn coloring book typewriter migas. Master cleanse sustainable palo santo taxidermy jianbing kinfolk tacos austin thundercats same slow-carb. Slow-carb activated charcoal yuccie tousled portland forage tilde VHS. Bushwick portland hexagon raw denim actually slow-carb vexillologist glossier seitan hella literally.",
+    "Cloud bread whatever thundercats single-origin coffee hella, prism actually shaman la croix mumblecore. Biodiesel chillwave cray schlitz 90's sartorial blue bottle celiac ethical la croix swag. Affogato occupy distillery hoodie butcher, ascot bicycle rights kogi. Photo booth ascot you probably haven't heard of them, vaporware knausgaard vice tofu iPhone sartorial drinking vinegar letterpress keffiyeh. Tousled pitchfork waistcoat, tbh cred sus photo booth bicycle rights actually marxism four dollar toast tattooed. Dreamcatcher schlitz pitchfork woke ramps you probably haven't heard of them stumptown ethical tonx vaporware wayfarers biodiesel.",
+  ],
+};
+
+// Define metadata for the page
+const pageTitle = articleData.title + " | La Fiera Deportiva";
+const pageDescription = articleData.excerpt;
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <div class="article-header">
+    <div class="category-tag">{articleData.category}</div>
+    <h1 class="article-title">{articleData.title}</h1>
+    <p class="article-excerpt">{articleData.excerpt}</p>
+    <p class="article-date">{articleData.date}</p>
+  </div>
+
+  <section class="featured-article">
+    <div class="container">
+      <div class="article-featured-image">
+        <img
+          src={articleData.image}
+          alt="Carlo Ancelotti, entrenador del Real Madrid"
+        />
+      </div>
+
+      <div class="article-content">
+        {articleData.content.map((paragraph) => <p>{paragraph}</p>)}
+      </div>
+
+      <div class="article-sidebar">
+        <div class="sidebar-section">
+          <h3 class="sidebar-title">Categorías</h3>
+          <div class="category-selector">
+            <select>
+              <option>Seleccionar Categoría</option>
+              <option>La Liga</option>
+              <option>Champions League</option>
+              <option>Premier League</option>
+              <option>Serie A</option>
+              <option>Bundesliga</option>
+              <option>España</option>
+              <option>México</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <h3 class="sidebar-title">Buscar</h3>
+          <div class="search-form">
+            <input type="text" placeholder="Buscar" />
+            <button class="search-button">Buscar</button>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <h3 class="sidebar-title">Liga de Naciones</h3>
+          <!-- Here you can add related articles or content -->
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Article Header Styles - Matches the example exactly */
+  .article-header {
+    background-color: #1c2b5a;
+    padding: 1.5rem 0 3rem;
+    text-align: center;
+    width: 100%;
+  }
+
+  .category-tag {
+    display: inline-block;
+    background-color: #e24b32;
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+  }
+
+  .article-title {
+    font-size: 2.8rem;
+    line-height: 1.2;
+    font-weight: 800;
+    color: white;
+    margin: 0 auto 1.5rem;
+    max-width: 1200px;
+    padding: 0 1.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .article-excerpt {
+    font-size: 1.4rem;
+    color: #e6e6e6;
+    font-weight: 400;
+    margin: 0 auto 0.5rem;
+    max-width: 900px;
+    padding: 0 1.5rem;
+    line-height: 1.4;
+  }
+
+  .article-date {
+    color: #a0a0a0;
+    font-size: 0.95rem;
+    margin: 0.5rem auto 0;
+    max-width: 900px;
+    padding: 0 1.5rem;
+  }
+
+  /* Main Content Styles */
+  .featured-article {
+    padding: 2rem 0 4rem;
+    background-color: var(bg-body);
+  }
+
+  .container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    grid-template-areas:
+      "image image"
+      "content sidebar";
+    gap: 2rem;
+  }
+
+  .article-featured-image {
+    grid-area: image;
+    width: 100%;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .article-featured-image img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .article-content {
+    grid-area: content;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: white;
+  }
+
+  .article-content p {
+    margin-bottom: 1.5rem;
+  }
+
+  .article-sidebar {
+    grid-area: sidebar;
+  }
+
+  .sidebar-section {
+    background-color: #1c2b5a;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .sidebar-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+    margin: 0 0 1rem;
+  }
+
+  .category-selector select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #333;
+    background-color: white;
+    cursor: pointer;
+  }
+
+  .search-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .search-form input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #333;
+  }
+
+  .search-button {
+    background-color: #e24b32;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.8rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .search-button:hover {
+    background-color: #c13a26;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 992px) {
+    .container {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        "image"
+        "content"
+        "sidebar";
+    }
+
+    .article-title {
+      font-size: 2.2rem;
+    }
+
+    .article-excerpt {
+      font-size: 1.2rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .article-title {
+      font-size: 1.8rem;
+    }
+
+    .article-excerpt {
+      font-size: 1.1rem;
+    }
+
+    .article-content {
+      font-size: 1rem;
+    }
+
+    .sidebar-section {
+      padding: 1.2rem;
+    }
+
+    .article-header {
+      padding: 1rem 0 2rem;
+    }
+
+    .category-tag {
+      margin-bottom: 1.2rem;
+    }
+  }
+</style>
