@@ -52,17 +52,112 @@
             <i class="fa-brands fa-spotify"></i>
           </div>
         </a>
-
-        <!-- Add hamburger button for mobile -->
-        <button class="hamburger-btn" aria-label="Menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
       </nav>
+
+      <!-- Mobile Menu Button -->
+      <button class="mobile-menu-toggle" aria-label="Toggle Menu">
+        <span class="hamburger-icon"></span>
+      </button>
     </div>
     <div class="header-border"></div>
   </div>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu-overlay"></div>
+
+  <!-- Mobile Menu Panel -->
+  <nav class="mobile-menu">
+    <div class="mobile-menu-header">
+      <a href="/" class="mobile-logo">
+        <img src="/logo-no-bg.png" alt="La Fiera Deportiva" />
+      </a>
+      <button class="mobile-menu-close" aria-label="Close menu">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="mobile-menu-links">
+      <a
+        href="https://www.chicagofirefc.com/tickets/"
+        target="_blank"
+        class="mobile-nav-link"
+      >
+        <div class="mobile-link-content">
+          <div class="logo-icon-mobile">
+            <img src="/fire-logo.png" alt="Chicago Fire FC" />
+          </div>
+          <span>Chicago Fire FC</span>
+        </div>
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </a>
+
+      <a
+        href="https://chicagostars.com/tickets/"
+        target="_blank"
+        class="mobile-nav-link"
+      >
+        <div class="mobile-link-content">
+          <div class="logo-icon-mobile">
+            <img src="/stars-logo.png" alt="Chicago Stars FC" />
+          </div>
+          <span>Chicago Stars FC</span>
+        </div>
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </a>
+
+      <a
+        href="https://www.chicagofirefc.com/tickets/"
+        target="_blank"
+        class="mobile-nav-link"
+      >
+        <div class="mobile-link-content">
+          <div class="logo-icon-mobile">
+            <img src="/mls-logo.png" alt="MLS" />
+          </div>
+          <span>MLS</span>
+        </div>
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </a>
+
+      <a
+        href="https://chicagostars.com/tickets/"
+        target="_blank"
+        class="mobile-nav-link"
+      >
+        <div class="mobile-link-content">
+          <div class="logo-icon-mobile">
+            <img src="/nwsl-logo.png" alt="NWSL" />
+          </div>
+          <span>NWSL</span>
+        </div>
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+      </a>
+    </div>
+
+    <div class="mobile-social-links">
+      <a
+        href="https://x.com/hernanespn?lang=ca"
+        target="_blank"
+        class="social-icon"
+      >
+        <i class="fa-brands fa-twitter"></i>
+      </a>
+      <a
+        href="https://www.facebook.com/aranavatv"
+        target="_blank"
+        class="social-icon"
+      >
+        <i class="fa-brands fa-facebook-f"></i>
+      </a>
+      <a
+        href="https://open.spotify.com/playlist/0tRWrUiHJHfgSbXQ5Whu9N"
+        target="_blank"
+        class="social-icon"
+      >
+        <i class="fa-brands fa-spotify"></i>
+      </a>
+    </div>
+  </nav>
 
   <style>
     .site-header {
@@ -153,29 +248,7 @@
     }
 
     .main-nav a:hover {
-      color: #ff0000;
-    }
-
-    /* Hamburger button styles */
-    .hamburger-btn {
-      display: none;
-      flex-direction: column;
-      justify-content: space-between;
-      width: 28px;
-      height: 20px;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      z-index: 100;
-    }
-
-    .hamburger-btn span {
-      width: 100%;
-      height: 2px;
-      background-color: white;
-      border-radius: 2px;
-      transition: all 0.3s ease;
+      color: #e24b32;
     }
 
     .header-border {
@@ -184,23 +257,256 @@
       left: 0;
       width: 100%;
       height: 4px;
-      background-color: #ff0000; /* Red border */
+      background-color: #e24b32; /* Red border */
     }
 
-    @media (max-width: 992px) {
+    /* Mobile Menu Styles */
+    .mobile-menu-toggle {
+      display: none; /* Hidden by default on desktop */
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      position: relative;
+      z-index: 100;
+    }
+
+    .hamburger-icon {
+      display: block;
+      position: relative;
+      width: 30px;
+      height: 3px;
+      background-color: white;
+      margin: 0 auto;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .hamburger-icon::before,
+    .hamburger-icon::after {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 3px;
+      background-color: white;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .hamburger-icon::before {
+      transform: translateY(-10px);
+    }
+
+    .hamburger-icon::after {
+      transform: translateY(10px);
+    }
+
+    .mobile-menu-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 998;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: -320px;
+      width: 300px;
+      height: 100vh;
+      background-color: var(--bg-card);
+      z-index: 999;
+      transition: right 0.3s ease-in-out;
+      overflow-y: auto;
+      padding: 0;
+      box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .mobile-menu-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .mobile-logo {
+      height: 50px;
+      overflow: hidden;
+    }
+
+    .mobile-logo img {
+      height: 100%;
+      width: auto;
+    }
+
+    .mobile-menu-close {
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .mobile-menu-links {
+      display: flex;
+      flex-direction: column;
+      margin: 0;
+      padding: 0;
+    }
+
+    .mobile-nav-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      color: white;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: background-color 0.2s;
+    }
+
+    .mobile-nav-link:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #e24b32;
+    }
+
+    .mobile-link-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon-mobile {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-icon-mobile img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .mobile-social-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+      padding: 0 20px;
+    }
+
+    .social-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #e24b32;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .social-icon:hover {
+      background-color: #e24b32;
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    /* Animation classes for menu toggling */
+    body.mobile-menu-active .mobile-menu {
+      right: 0;
+    }
+
+    body.mobile-menu-active .mobile-menu-overlay {
+      display: block;
+    }
+
+    /* Hamburger animation when active */
+    body.mobile-menu-active .hamburger-icon {
+      background-color: transparent;
+    }
+
+    body.mobile-menu-active .hamburger-icon::before {
+      transform: rotate(45deg);
+    }
+
+    body.mobile-menu-active .hamburger-icon::after {
+      transform: rotate(-45deg);
+    }
+
+    /* Media queries - only show mobile menu at appropriate sizes */
+    @media (max-width: 1100px) {
       .main-nav {
-        display: none; /* Hide main nav on mobile */
+        display: none;
       }
 
-      .hamburger-btn {
-        display: flex; /* Show hamburger on mobile */
+      .mobile-menu-toggle {
+        display: block;
       }
     }
 
     @media (max-width: 768px) {
-      .logo {
-        font-size: 1.25rem;
+      .site-header {
+        height: 90px;
+      }
+
+      .logo-icon {
+        width: 5rem;
+        height: 5rem;
       }
     }
   </style>
+
+  <script>
+    // Add this script to handle menu toggling
+    document.addEventListener("DOMContentLoaded", () => {
+      const menuToggle = document.querySelector(".mobile-menu-toggle");
+      const menuClose = document.querySelector(".mobile-menu-close");
+      const menuOverlay = document.querySelector(".mobile-menu-overlay");
+      const body = document.body;
+      // Open menu
+      menuToggle?.addEventListener("click", () => {
+        body.classList.add("mobile-menu-active");
+        document.body.style.overflow = "hidden"; // Prevent scrolling
+      });
+
+      // Close menu functions
+      const closeMenu = () => {
+        body.classList.remove("mobile-menu-active");
+        document.body.style.overflow = ""; // Re-enable scrolling
+      };
+      // Close with X button
+      menuClose?.addEventListener("click", closeMenu);
+
+      // Close by clicking overlay
+      menuOverlay?.addEventListener("click", closeMenu);
+
+      // Close when pressing Escape key
+      document.addEventListener("keydown", (e) => {
+        if (
+          e.key === "Escape" &&
+          body.classList.contains("mobile-menu-active")
+        ) {
+          closeMenu();
+        }
+      });
+
+      // Close when clicking a menu link (optional)
+      const menuLinks = document.querySelectorAll(".mobile-nav-link");
+      menuLinks.forEach((link) => {
+        link.addEventListener("click", closeMenu);
+      });
+    });
+  </script>
 </header>
