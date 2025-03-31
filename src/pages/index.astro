@@ -737,7 +737,7 @@ const lastUpdated = new Date().toLocaleString("en-US", {
           <!-- Main featured article card (left side) -->
           <a href="/articles/featured-article" class="hero-main-card">
             <div class="video-thumbnail-1">
-              <span class="category-tag-2">MLS</span>
+              <span class="category-tag-1">MLS</span>
             </div>
             <div class="card-content">
               <h2>El Gigante Dormido Empieza a Despertar</h2>
@@ -752,7 +752,7 @@ const lastUpdated = new Date().toLocaleString("en-US", {
             <!-- Top secondary article card -->
             <a href="/articles/secondary-article-1" class="secondary-card">
               <div class="video-thumbnail-2">
-                <span class="category-tag-2">NWSL</span>
+                <span class="category-tag-1">NWSL</span>
               </div>
               <div class="card-content">
                 <h3>Article 2</h3>
@@ -763,7 +763,7 @@ const lastUpdated = new Date().toLocaleString("en-US", {
             <!-- Bottom secondary article card -->
             <a href="/articles/secondary-article-2" class="secondary-card">
               <div class="video-thumbnail-2">
-                <span class="category-tag-2">MLS</span>
+                <span class="category-tag-1">MLS</span>
               </div>
               <div class="card-content">
                 <h3>Article 3</h3>
@@ -1306,6 +1306,21 @@ const lastUpdated = new Date().toLocaleString("en-US", {
           font-size: 1rem;
           margin-bottom: 0;
           text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Category tag styling */
+        .category-tag-2 {
+          display: inline-block;
+          background-color: #e24b32;
+          color: white;
+          padding: 0.3rem 0.8rem;
+          border-radius: 4px;
+          font-size: 0.9rem;
+          font-weight: 500;
+          position: absolute;
+          top: 1.5rem;
+          left: 1.5rem;
+          z-index: 2;
         }
 
         /* Section Spacing */
@@ -2073,6 +2088,9 @@ const lastUpdated = new Date().toLocaleString("en-US", {
         }
 
         /* Media Queries */
+        /* Media Queries - Organized by component and breakpoint */
+
+        /* Hero Section Responsive */
         @media (max-width: 992px) {
           .hero-content {
             grid-template-columns: 1fr;
@@ -2085,11 +2103,13 @@ const lastUpdated = new Date().toLocaleString("en-US", {
           .hero-secondary-cards {
             height: auto;
             flex-direction: row;
+            gap: 1rem;
           }
 
           .secondary-card {
             height: 250px;
             flex: 1;
+            min-height: 250px;
           }
 
           .hero-main-card h2 {
@@ -2108,10 +2128,42 @@ const lastUpdated = new Date().toLocaleString("en-US", {
 
           .secondary-card {
             height: 250px;
+            width: 100%; /* Ensure full width */
+          }
+
+          .section-title h2,
+          .section-title {
+            font-size: 1.6rem;
+          }
+
+          /* Standings specific */
+          .standings-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+          }
+
+          .standings-meta {
+            width: 100%;
+            justify-content: space-between;
+          }
+
+          .standings-table {
+            font-size: 0.9rem;
+          }
+
+          .team-column {
+            min-width: 160px;
+          }
+
+          /* Projects grid */
+          .projects-grid {
+            grid-template-columns: 1fr;
           }
         }
 
         @media (max-width: 576px) {
+          /* Hero section */
           .hero-title h2 {
             font-size: 1.5rem;
           }
@@ -2128,7 +2180,12 @@ const lastUpdated = new Date().toLocaleString("en-US", {
             font-size: 1rem;
           }
 
-          .card-tag {
+          .secondary-card h3 {
+            font-size: 1.5rem;
+          }
+
+          .card-tag,
+          .category-tag-2 {
             padding: 0.2rem 0.6rem;
             font-size: 0.8rem;
             top: 1rem;
@@ -2138,116 +2195,8 @@ const lastUpdated = new Date().toLocaleString("en-US", {
           .card-content {
             padding: 1rem;
           }
-        }
 
-        @media (max-width: 1024px) {
-          .video-items-wrapper {
-            justify-content: flex-start;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-            scroll-behavior: smooth;
-            padding-bottom: 1rem; /* For scrollbar space */
-          }
-
-          .video-item {
-            flex: 0 0 calc(33.33% - 15px);
-            scroll-snap-align: start;
-          }
-
-          .main-video-title {
-            font-size: 1.3rem;
-          }
-        }
-
-        @media (max-width: 768px) {
-          .video-item {
-            flex: 0 0 calc(50% - 10px);
-          }
-
-          .main-video-title {
-            font-size: 1.2rem;
-          }
-        }
-
-        @media (max-width: 576px) {
-          .carousel-container {
-            padding: 0 1rem;
-          }
-
-          .video-item {
-            flex: 0 0 calc(80% - 10px);
-          }
-
-          .section-header h2 {
-            font-size: 1.5rem;
-          }
-
-          .main-video-title {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-          }
-        }
-
-        @media (max-width: 992px) {
-          .videos-grid {
-            grid-template-columns: repeat(2, 1fr);
-          }
-        }
-
-        @media (max-width: 768px) {
-          .section-title h2 {
-            font-size: 2rem;
-          }
-        }
-
-        @media (max-width: 576px) {
-          .videos-grid {
-            grid-template-columns: 1fr;
-          }
-
-          .section-title h2 {
-            font-size: 1.8rem;
-          }
-
-          .video-info h3 {
-            font-size: 1.1rem;
-          }
-        }
-
-        /* Responsive tweaks for standings section */
-        @media (max-width: 992px) {
-          .section-title {
-            font-size: 1.8rem;
-          }
-        }
-
-        @media (max-width: 768px) {
-          .standings-header {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 1rem;
-          }
-
-          .standings-meta {
-            width: 100%;
-            justify-content: space-between;
-          }
-
-          .section-title {
-            font-size: 1.6rem;
-          }
-
-          .standings-table {
-            font-size: 0.9rem;
-          }
-
-          .team-column {
-            min-width: 160px;
-          }
-        }
-
-        @media (max-width: 576px) {
+          /* Standings section */
           .section-title {
             font-size: 1.5rem;
           }
@@ -2292,68 +2241,20 @@ const lastUpdated = new Date().toLocaleString("en-US", {
             padding: 0.5rem 1rem;
             font-size: 0.9rem;
           }
-        }
-        @media (max-width: 960px) {
-          .profile-wrapper {
-            flex-direction: column;
-            text-align: center;
-          }
 
-          .banner-wrapper,
-          .newsletter-wrapper {
-            flex-direction: column;
-            text-align: center;
-          }
-
-          .banner-content p,
-          .newsletter-content p {
-            margin-left: auto;
-            margin-right: auto;
-          }
-
-          .hero-profile {
-            padding: 4rem 0 3rem;
-          }
-
-          .profile-content h1,
-          .name {
-            font-size: 2.5rem; /* Adjusted to keep h1 and name consistent */
-          }
-
-          .bio,
-          .work-info {
-            margin-left: auto;
-            margin-right: auto;
-            padding-left: 0; /* Remove padding on mobile for centered alignment */
-          }
-
-          .welcome-text {
-            padding-left: 0; /* Remove padding on mobile for centered alignment */
-          }
-        }
-
-        @media (max-width: 768px) {
-          .section-title {
-            font-size: 1.5rem;
-          }
-        }
-
-        @media (max-width: 1024px) {
-          .projects-grid {
-            grid-template-columns: repeat(2, 1fr);
-          }
-        }
-
-        @media (max-width: 768px) {
-          .projects-grid {
+          /* Videos grid */
+          /* .videos-grid {
             grid-template-columns: 1fr;
           }
-        }
 
-        @media (max-width: 640px) {
+          .video-info h3 {
+            font-size: 1.1rem;
+          } */
+
+          /* Profile content */
           .profile-content h1,
           .name {
-            font-size: 2rem; /* Further reduced for small screens */
+            font-size: 2rem;
           }
 
           .welcome-text {
@@ -2366,15 +2267,89 @@ const lastUpdated = new Date().toLocaleString("en-US", {
           }
         }
 
+        /* Video carousel specific */
+        @media (max-width: 1024px) {
+          .video-items-wrapper {
+            justify-content: flex-start;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scroll-behavior: smooth;
+            padding-bottom: 1rem;
+          }
+
+          .video-item {
+            flex: 0 0 calc(33.33% - 15px);
+            scroll-snap-align: start;
+          }
+
+          .main-video-title {
+            font-size: 1.3rem;
+          }
+
+          .projects-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .video-item {
+            flex: 0 0 calc(50% - 10px);
+          }
+
+          .main-video-title {
+            font-size: 1.2rem;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .carousel-container {
+            padding: 0 1rem;
+          }
+
+          .video-item {
+            flex: 0 0 calc(80% - 10px);
+          }
+
+          .section-header h2 {
+            font-size: 1.5rem;
+          }
+
+          .main-video-title {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+          }
+        }
+
+        /* Profile, Banner, and Newsletter sections */
         @media (max-width: 960px) {
-          .banner-wrapper {
+          .profile-wrapper,
+          .banner-wrapper,
+          .newsletter-wrapper {
             flex-direction: column;
             text-align: center;
           }
 
-          .banner-content p {
+          .banner-content p,
+          .newsletter-content p,
+          .bio,
+          .work-info {
             margin-left: auto;
             margin-right: auto;
+            padding-left: 0;
+          }
+
+          .hero-profile {
+            padding: 4rem 0 3rem;
+          }
+
+          .profile-content h1,
+          .name {
+            font-size: 2.5rem;
+          }
+
+          .welcome-text {
+            padding-left: 0;
           }
 
           .banner-content h2 {
@@ -2382,6 +2357,7 @@ const lastUpdated = new Date().toLocaleString("en-US", {
           }
         }
 
+        /* Podcast banner */
         @media (max-width: 640px) {
           .podcast-banner {
             padding: 3rem 0;
@@ -2390,6 +2366,30 @@ const lastUpdated = new Date().toLocaleString("en-US", {
           .banner-logo {
             width: 120px;
             height: 120px;
+          }
+        }
+
+        /* Videos grid */
+        /* @media (max-width: 992px) {
+          .videos-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        } */
+        /* Add or modify this in your media queries section */
+
+        /* Videos Destacados section specific styles */
+        @media (max-width: 768px) {
+          .videos-grid,
+          .featured-videos-grid {
+            display: flex !important; /* Override any grid display */
+            flex-direction: column !important;
+            gap: 1.5rem;
+          }
+
+          .video-card,
+          .featured-video-card {
+            width: 100% !important;
+            margin-bottom: 1.5rem;
           }
         }
       </style>
