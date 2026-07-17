@@ -1,6 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import {
+  getHomepageArticles,
+  getHomepageVideos,
+  getVideoThumbnailUrl,
+} from "../lib/sanity";
+
+const { featured: featuredArticle, secondary: secondaryArticles } =
+  await getHomepageArticles();
+const homepageVideos = await getHomepageVideos();
 
 // Hard-coded standings data for MLS (Eastern and Western Conference)
 const mlsEasternStandings = [
@@ -734,49 +743,40 @@ const lastUpdated = new Date().toLocaleString("en-US", {
         </div>
 
         <div class="hero-content">
-          <!-- Main featured article card (left side) -->
-          <a href="/articles/featured-article" class="hero-main-card">
-            <div class="video-thumbnail-1">
-              <span class="category-tag-1">MLS</span>
-            </div>
-            <div class="card-content">
-              <h2>El Gigante Dormido Empieza a Despertar</h2>
-              <p>
-                El Crew no pudieron con el Fire pese a mostrar una mejor imagen
-                en la cancha
-              </p>
-            </div>
-          </a>
+          {
+            featuredArticle && (
+              <a
+                href={`/articles/${featuredArticle.slug}`}
+                class="hero-main-card"
+              >
+                <div class="video-thumbnail-1">
+                  <span class="category-tag-1">{featuredArticle.category}</span>
+                </div>
+                <div class="card-content">
+                  <h2>{featuredArticle.title}</h2>
+                  <p>{featuredArticle.excerpt}</p>
+                </div>
+              </a>
+            )
+          }
 
           <div class="hero-secondary-cards">
-            <!-- Top secondary article card -->
-            <a href="/articles/secondary-article-1" class="secondary-card">
-              <div class="video-thumbnail-2">
-                <span class="category-tag-1">NWSL</span>
-              </div>
-              <div class="card-content">
-                <h3>Inicio difícil sin Swanson</h3>
-                <p>
-                  Chicago Stars FC inicia la temporada 2025 con dificultades,
-                  sufriendo dos derrotas mientras enfrenta la ausencia de
-                  Mallory Swanson.
-                </p>
-              </div>
-            </a>
-
-            <!-- Bottom secondary article card -->
-            <a href="/articles/secondary-article-2" class="secondary-card">
-              <div class="video-thumbnail-2">
-                <span class="category-tag-1">MLS</span>
-              </div>
-              <div class="card-content">
-                <h3>Messi en Chicago</h3>
-                <p>
-                  Messi Regresa a Chicago: El Inter Miami Enfrenta al Fire en
-                  Soldier Field
-                </p>
-              </div>
-            </a>
+            {
+              secondaryArticles.map((article) => (
+                <a
+                  href={`/articles/${article.slug}`}
+                  class="secondary-card"
+                >
+                  <div class="video-thumbnail-2">
+                    <span class="category-tag-1">{article.category}</span>
+                  </div>
+                  <div class="card-content">
+                    <h3>{article.title}</h3>
+                    <p>{article.excerpt}</p>
+                  </div>
+                </a>
+              ))
+            }
           </div>
         </div>
       </div>
@@ -791,41 +791,19 @@ const lastUpdated = new Date().toLocaleString("en-US", {
       </div>
 
       <div class="videos-grid">
-        <!-- Video Card 1 -->
-        <a href="/videos/video-1" class="video-card">
-          <div class="video-thumbnail">
-            <img src="/guti.png" alt="Brian Gutierrez Interview" />
-            <span class="category-tag-1">MLS</span>
-          </div>
-          <div class="video-info">
-            <h3>Brian Gutierrez (Guty) Anoto dos goles en Columbus al Crew</h3>
-          </div>
-        </a>
-
-        <!-- Video Card 2 -->
-        <a href="/videos/video-2" class="video-card">
-          <div class="video-thumbnail">
-            <img src="/lfd-show.png" alt="Chicago Stars FC & Chicago Fire FC" />
-            <span class="category-tag-1">Podcast</span>
-          </div>
-          <div class="video-info">
-            <h3>La Fiera Deportiva 2025 Chicago Stars FC & Chicago Fire FC</h3>
-          </div>
-        </a>
-
-        <!-- Video Card 3 -->
-        <a href="/videos/video-3" class="video-card">
-          <div class="video-thumbnail">
-            <img src="/lfd-show-2.png" alt="AranaTV Chicago Fire" />
-            <span class="category-tag-1">Podcast</span>
-          </div>
-          <div class="video-info">
-            <h3>
-              La Fiera Deportiva 2025 En AranaTV El Chicago Fire FC & Las
-              Chicago Stars FC
-            </h3>
-          </div>
-        </a>
+        {
+          homepageVideos.map((video) => (
+            <a href={`/videos/${video.slug}`} class="video-card">
+              <div class="video-thumbnail">
+                <img src={getVideoThumbnailUrl(video)} alt={video.title} />
+                <span class="category-tag-1">{video.category}</span>
+              </div>
+              <div class="video-info">
+                <h3>{video.title}</h3>
+              </div>
+            </a>
+          ))
+        }
       </div>
     </div>
   </section>

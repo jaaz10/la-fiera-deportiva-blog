@@ -5,6 +5,11 @@ dist/
 
 # dependencies
 node_modules/
+studio/node_modules/
+studio/dist/
+
+# Sanity
+studio/.sanity/
 
 # logs
 npm-debug.log*
@@ -16,6 +21,7 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
+studio/.env
 
 # macOS-specific files
 .DS_Store

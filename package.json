@@ -6,14 +6,23 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "seed:sanity": "node scripts/seed-sanity.mjs",
+    "studio": "npm --prefix studio run dev",
+    "studio:deploy": "npm --prefix studio run deploy"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.1.0",
     "@astrojs/node": "^9.1.3",
     "@astrojs/rss": "^4.0.11",
     "@astrojs/sitemap": "^3.2.1",
+    "@sanity/client": "^7.23.2",
+    "@sanity/image-url": "^2.1.1",
     "astro": "^5.4.2",
+    "astro-portabletext": "^0.13.0",
     "rss-parser": "^3.13.0"
+  },
+  "devDependencies": {
+    "dotenv": "^17.4.2"
   }
 }

@@ -1,0 +1,24 @@
+---
+import VideoPage from "../../components/VideoPage.astro";
+import { getVideos, getVideoBySlug } from "../../lib/sanity";
+
+export async function getStaticPaths() {
+  const videos = await getVideos();
+  return videos.map((video) => ({
+    params: { slug: video.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const video = slug ? await getVideoBySlug(slug) : undefined;
+
+if (!video) {
+  throw new Error(`Video not found: ${slug}`);
+}
+
+const related = (await getVideos())
+  .filter((item) => item.slug !== video.slug)
+  .slice(0, 3);
+---
+
+<VideoPage video={video} related={related} />

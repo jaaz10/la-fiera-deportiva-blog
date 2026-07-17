@@ -1,46 +1,38 @@
 ---
-// featured-articles.astro
-import Layout from "../../layouts/Layout.astro";
+import Layout from "../layouts/Layout.astro";
+import {
+  formatPublishedDate,
+  getArticleImageUrl,
+  getBodyParagraphs,
+} from "../lib/sanity";
+import type { Article } from "../lib/types";
 
-// You can fetch or import article data here
-const articleData = {
-  category: "NWSL",
-  title: "The Chicago Stars FC",
-  excerpt:
-    "Chicago Stars FC inicia la temporada 2025 con dificultades, sufriendo dos derrotas mientras enfrenta la ausencia de Mallory Swanson.",
-  date: "Marzo 29, 2025",
-  image: "/swanson-1.png",
-  content: [
-    "Las Chicago Stars FC en esta temporada 2025 empezaron con dos derrotas muy duras para el equipo dirigido por Lorne Donaldson, perdiendo con las actuales campeonas de la liga NWSL el Orlando Pride por 6@0 de visita y en el Home Opener en Seatgeek frente al Houston Dash 2@1.",
-    "Por ahora las Chicago Stars son solo eso Estrellas, jugadoras que han brillado en sus equipos, refiriéndome a las nuevas contrataciones pero que todavía no están encajando en el futbol que el entrenador quiere implantar Muchos aspectos influyen en el equipo, empezando por la ausencia de su Estrella principal y jugadora mas cara de la liga Mallory Swanson que no se presento a la pre- temporada con el equipo en Florida y tampoco se sabe cuando, como y por que  de la ausencia.",
-    "Solo queda esperar que pueda volver a las canchas este 2025 ya que el equipo la necesita y la afición la exige A eso las lesiones de las delanteras Ava cook & Jenna Bike Y ahora las nuevas incorporaciones en el equipo para darle mas capacidad de banca como la japonesa Manaka Hayashi La Canadiense Julia Grosso, la española  Maitane Lopez, la Brasileña Ludmila, la USWNT Micayla Johnson de 17 años la portuguesa Nadia Gomes y las que vendrán en el verano Si son todas estrellas, en un equipo de estrellas donde el Entrenador Lorne Donaldson tiene que hacer que brillen.",
-  ],
-};
+interface Props {
+  article: Article;
+}
 
-// Define metadata for the page
-const pageTitle = articleData.title + " | La Fiera Deportiva";
-const pageDescription = articleData.excerpt;
+const { article } = Astro.props;
+const imageUrl = getArticleImageUrl(article);
+const paragraphs = getBodyParagraphs(article.body);
+const pageTitle = `${article.title} | La Fiera Deportiva`;
 ---
 
-<Layout title={pageTitle} description={pageDescription}>
+<Layout title={pageTitle} description={article.excerpt}>
   <div class="article-header">
-    <div class="category-tag">{articleData.category}</div>
-    <h1 class="article-title">{articleData.title}</h1>
-    <p class="article-excerpt">{articleData.excerpt}</p>
-    <p class="article-date">{articleData.date}</p>
+    <div class="category-tag">{article.category}</div>
+    <h1 class="article-title">{article.title}</h1>
+    <p class="article-excerpt">{article.excerpt}</p>
+    <p class="article-date">{formatPublishedDate(article.publishedAt)}</p>
   </div>
 
   <section class="featured-article">
     <div class="container">
       <div class="article-featured-image">
-        <img
-          src={articleData.image}
-          alt="Carlo Ancelotti, entrenador del Real Madrid"
-        />
+        <img src={imageUrl} alt={article.heroImage?.alt || article.title} />
       </div>
 
       <div class="article-content">
-        {articleData.content.map((paragraph) => <p>{paragraph}</p>)}
+        {paragraphs.map((paragraph) => <p>{paragraph}</p>)}
       </div>
 
       <div class="article-sidebar">
@@ -67,18 +59,12 @@ const pageDescription = articleData.excerpt;
             <button class="search-button">Buscar</button>
           </div>
         </div>
-
-        <div class="sidebar-section">
-          <h3 class="sidebar-title">Liga de Naciones</h3>
-          <!-- Here you can add related articles or content -->
-        </div>
       </div>
     </div>
   </section>
 </Layout>
 
 <style>
-  /* Article Header Styles - Matches the example exactly */
   .article-header {
     background-color: #1c2b5a;
     padding: 1.5rem 0 3rem;
@@ -126,10 +112,8 @@ const pageDescription = articleData.excerpt;
     padding: 0 1.5rem;
   }
 
-  /* Main Content Styles */
   .featured-article {
     padding: 2rem 0 4rem;
-    background-color: var(bg-body);
   }
 
   .container {
@@ -229,7 +213,6 @@ const pageDescription = articleData.excerpt;
     background-color: #c13a26;
   }
 
-  /* Responsive adjustments */
   @media (max-width: 992px) {
     .container {
       grid-template-columns: 1fr;
@@ -240,37 +223,11 @@ const pageDescription = articleData.excerpt;
     }
 
     .article-title {
-      font-size: 2.2rem;
+      font-size: 2rem;
     }
 
     .article-excerpt {
-      font-size: 1.2rem;
-    }
-  }
-
-  @media (max-width: 576px) {
-    .article-title {
-      font-size: 1.8rem;
-    }
-
-    .article-excerpt {
-      font-size: 1.1rem;
-    }
-
-    .article-content {
-      font-size: 1rem;
-    }
-
-    .sidebar-section {
-      padding: 1.2rem;
-    }
-
-    .article-header {
-      padding: 1rem 0 2rem;
-    }
-
-    .category-tag {
-      margin-bottom: 1.2rem;
+      font-size: 1.15rem;
     }
   }
 </style>

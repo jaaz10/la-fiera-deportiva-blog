@@ -1,0 +1,20 @@
+---
+import ArticlePage from "../../components/ArticlePage.astro";
+import { getArticles, getArticleBySlug } from "../../lib/sanity";
+
+export async function getStaticPaths() {
+  const articles = await getArticles();
+  return articles.map((article) => ({
+    params: { slug: article.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const article = slug ? await getArticleBySlug(slug) : undefined;
+
+if (!article) {
+  throw new Error(`Article not found: ${slug}`);
+}
+---
+
+<ArticlePage article={article} />

@@ -1,6 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { getVideos, getVideoThumbnailUrl } from "../lib/sanity";
+
+const videos = await getVideos();
 ---
 
 <Layout title={`Videos | ${SITE_TITLE}`} description={SITE_DESCRIPTION}>
@@ -8,30 +11,31 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
     <div class="container">
       <h1 class="page-title">Recent Videos</h1>
       <div class="grid grid-3">
-        <!-- Video Card 1 -->
-        <div class="content-card">
-          <a href="https://www.youtube.com/watch?v=TzdqccgC2iE" target="_blank">
-            <div class="card-thumbnail">
-              <img
-                src="https://img.youtube.com/vi/TzdqccgC2iE/maxresdefault.jpg"
-                alt="Video Title"
-              />
-              <div class="icon-play">
-                <i class="fas fa-play-circle"></i>
-              </div>
+        {
+          videos.map((video) => (
+            <div class="content-card">
+              <a href={`/videos/${video.slug}`}>
+                <div class="card-thumbnail">
+                  <img
+                    src={getVideoThumbnailUrl(video)}
+                    alt={video.title}
+                  />
+                  <div class="icon-play">
+                    <i class="fas fa-play-circle"></i>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h3>{video.title}</h3>
+                  <div class="card-meta">
+                    <span class="card-meta-item">
+                      <i class="fa-solid fa-video"></i> {video.category}
+                    </span>
+                  </div>
+                </div>
+              </a>
             </div>
-            <div class="card-body">
-              <h3>Real Madrid vs Barcelona: El Clásico Tactical Analysis</h3>
-              <div class="card-meta">
-                <span class="card-meta-item"
-                  ><i class="fa-solid fa-video"></i> Video</span
-                >
-              </div>
-            </div>
-          </a>
-        </div>
-
-        <!-- Add more video cards here -->
+          ))
+        }
       </div>
     </div>
   </section>
